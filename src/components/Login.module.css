@@ -1,0 +1,35 @@
+.login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #eee;
+    border-radius: 10px;
+}
+
+.login label {
+    display: inline-block;
+}
+
+.login input {
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    border-bottom: solid #ddd 2px;
+    width: 350px;
+    float: right;
+    line-height: normal;
+    font-weight: 200;
+}
+
+.login .container {
+    display: flex;
+    min-height: 54px;
+    box-shadow: 0 0 10px -8px black;
+}
+
+.loginLogo {
+    display: flex;
+    align-items: center;
+
+}
