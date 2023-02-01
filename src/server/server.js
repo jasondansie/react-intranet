@@ -1,64 +1,25 @@
 var express = require('express');
 var app = express();
-//const config = require('./config.js');
 const mariadb = require('mariadb');
 const config = require('./config');
 const db = require('./database');
 
-  
+
 const getAllU =  async () =>{
-
     const connection = await mariadb.createConnection(config.db);
-
-    console.log("connection: ",connection);
-
     let result = await connection.query('select * from users');
-
     delete result.meta;
-
-    console.log(result);
-
     connection.end();
-
-    return result;
-
-    
+    return result;  
 }
 
-app.get('/', function async (req, res) {
-   
-    // let connection = mysql.createConnection(config.db);
-
-    // connection.connect(function(err) {
-    //     if (err) {
-    //       return console.error('error: ' + err.message);
-    //     }
-      
-    //     console.log('Connected to the MySQL server.');
-
-        
-        // // query to the database and get the records
-        // connection.query('select * from users', function (err, recordset) {
-            
-        //     if (err) console.log(err)
-
-        //     // send records as a response
-        //     res.send(recordset);
-            
-        // });
-
-    //   });
-
-   
-
+app.get('/', async function (req, res) {
     let recordset = await getAllU();
-    console.log("recordset: ",recordset);
-      res.send(recordset);
-      
+    res.send(recordset);     
 });
 
 var server = app.listen(5000, function () {
-    console.log('Server is running..');
+    console.log('Server is running on port 5000..');
 });
 
 
