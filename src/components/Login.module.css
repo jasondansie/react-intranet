@@ -4,11 +4,26 @@
     justify-content: center;
     height: 100vh;
     background-color: #eee;
-    border-radius: 10px;
+}
+
+.login .container {
+    display: flex;
+    flex-direction: column;
+    min-height: 80vh;
+    min-width: 45vw;
+    box-shadow: 0 0 10px -8px black;
+    border-radius: 15px;
+    background-color: white;
 }
 
 .login label {
     display: inline-block;
+}
+
+.login .logo {
+    height: 25vh;
+    background: url("https://source.unsplash.com/1600x900/?gamer")no-repeat fixed center center/cover;
+    border-radius: 15px 15px 0 0;
 }
 
 .login input {
@@ -22,14 +37,19 @@
     font-weight: 200;
 }
 
-.login .container {
-    display: flex;
-    min-height: 54px;
-    box-shadow: 0 0 10px -8px black;
+.login .loginMain {
+    min-width: 40vw;
+    margin-top: 5vh;
+    padding: 25px;
 }
 
-.loginLogo {
+.login .selectors {
     display: flex;
-    align-items: center;
+    flex-direction: row;
+}
+
+.login .remember {
+    display: flex;
+    flex-direction: row-reverse;
 
 }

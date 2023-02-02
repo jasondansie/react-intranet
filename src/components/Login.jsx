@@ -5,7 +5,7 @@ const Login = () => {
     return (
         <div className={classes.login}>
             <div className={classes.container}>
-                <div className={classes.loginLogo}>
+                <div className={classes.logo}>
 
                 </div>
                 <div className={classes.loginMain}>
@@ -19,9 +19,10 @@ const Login = () => {
                             <input type="password" name="password" id="password" placeholder='Password' />
                         </div>
                         <div className={classes.selectors}>
-                            <div>
-                                <label htmlFor="remember">Remember me</label>
+                            <div className='remember'>
+
                                 <input type="checkbox" name="remember" id="remember" />
+                                <label htmlFor="remember">Remember me</label>
                             </div>
 
                             <a href="http://" >Forgot Password?</a>
