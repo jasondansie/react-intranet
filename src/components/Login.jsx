@@ -6,15 +6,18 @@ const Login = () => {
         <div className={classes.login}>
             <div className={classes.container}>
                 <div className={classes.logo}>
+                    <div className='companyLogo'>
+                        <img src="https://www.goodcall.fi/wp-content/uploads/2021/05/logo2.png" alt="" />
+                    </div>
 
                 </div>
                 <div className={classes.loginMain}>
                     <form action="">
-                        <div>
+                        <div className=''>
                             <label htmlFor="email">E-mail</label>
                             <input type="email" name="email" id="email" placeholder='E-mail' />
                         </div>
-                        <div>
+                        <div className='password'>
                             <label htmlFor="password">Password</label>
                             <input type="password" name="password" id="password" placeholder='Password' />
                         </div>

@@ -10,19 +10,24 @@
     display: flex;
     flex-direction: column;
     min-height: 80vh;
-    min-width: 45vw;
+    min-width: 65vw;
+
     box-shadow: 0 0 10px -8px black;
     border-radius: 15px;
     background-color: white;
 }
 
-.login label {
-    display: inline-block;
+img {
+    height: 100px;
+    width: 150px;
 }
 
 .login .logo {
-    height: 25vh;
-    background: url("https://source.unsplash.com/1600x900/?gamer")no-repeat fixed center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 11rem;
+    background: url("../../public/images/hmd-home_nokia_216.jpg")no-repeat fixed center center/cover;
     border-radius: 15px 15px 0 0;
 }
 
@@ -38,18 +43,48 @@
 }
 
 .login .loginMain {
-    min-width: 40vw;
-    margin-top: 5vh;
-    padding: 25px;
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+    height: 20rem;
+}
+
+.login form {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: 100%;
+}
+
+.login label {
+    line-height: 2rem;
+    height: 2rem;
+    font-weight: 300;
+    font-size: 15px;
+}
+
+.email {
+    display: block;
+    margin: 0 0 20px;
+    background-color: slategray;
 }
 
 .login .selectors {
     display: flex;
     flex-direction: row;
+    margin: 50px 0 50px 0;
 }
 
 .login .remember {
     display: flex;
     flex-direction: row-reverse;
 
+}
+
+.login button {
+    width: 50%;
+    height: 5vh;
+    align-items: center;
+    margin: 0 0 0 25%;
+    background-color: rgb(156, 196, 117);
 }
