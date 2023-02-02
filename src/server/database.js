@@ -12,6 +12,17 @@ const getAllUsers = async () => {
     connection.end();
 }
 
+const getSingleUser = async (user) => {
+
+  const connection = await mariadb.createConnection(config.db);
+
+    let result = await connection.query(`SELECT from users WHERE email = ${user}`);
+
+    delete result.meta;
+
+    connection.end();
+}
+
 module.exports = {
-  getAllUsers
+  getAllUsers, getSingleUser
 }
