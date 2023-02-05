@@ -1,11 +1,16 @@
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './App.css';
-import Login from './components/Login';
+import AdminConsole from './components/AdminConsole';
+import Layout from './pages/Layout';
 
 function App() {
   return (
-    <div >
-      <Login/>
-    </div>
+    <BrowserRouter>
+      <Routes>
+          <Route path='/' element={<Layout />}></Route>
+          <Route path='/adminConsole' element={<AdminConsole />}></Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 

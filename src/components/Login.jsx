@@ -3,21 +3,28 @@ import classes from './Login.module.css'
 import axios from 'axios';
 import { useState } from 'react';
 
+
 const Login = () => {
     const [data, setData] = useState([]);
     const [user, setUser] = useState("");
     const [pwd, setPwd] = useState("");
 
 
+    let userInfo = `${user}&${pwd}`;
+
     const submitHandler = (e) => {
         e.preventDefault();
-        console.log("user", user);
 
-        axios.get(`http://localhost:5000/getUser/${user}`)
+        axios.get(`http://localhost:5000/getUser/${userInfo}`)
             .then(
                 (res) => {
                     console.log("data", res.data);
                     setData(res.data);
+                    if (res.data == "") {
+                        alert('user info incorrect');
+                    } else {
+
+                    }
                 });
     }
 
@@ -41,7 +48,7 @@ const Login = () => {
                 </div>
                 <div className={classes.loginMain}>
                     <form action="">
-                        <div className=''>
+                        <div className='email'>
                             <label htmlFor="email">E-mail</label>
                             <input type="email" name="email" id="email" placeholder='E-mail' onChange={(e) => changeHandler(e)} />
                         </div>
