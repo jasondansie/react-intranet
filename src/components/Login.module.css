@@ -11,7 +11,6 @@
     flex-direction: column;
     min-height: 80vh;
     min-width: 45vw;
-
     box-shadow: 0 0 10px -8px black;
     border-radius: 15px;
     background-color: white;
@@ -38,12 +37,14 @@ img {
     height: 20rem;
 }
 
-.login input {
+
+
+.formInput {
     border-top: none;
     border-right: none;
     border-left: none;
     border-bottom: solid #ddd 2px;
-    width: 350px;
+    width: 25vw;
     line-height: normal;
     font-weight: 200;
 }
@@ -51,6 +52,7 @@ img {
 .login form {
     display: flex;
     flex-direction: column;
+    justify-content: space-evenly;
     width: 90%;
     height: 100%;
 }
@@ -65,24 +67,15 @@ img {
     font-size: 15px;
 }
 
-.email {
-    display: block;
-    margin: 0 0 20px;
-    background-color: slategray;
-}
-
 .login .selectors {
     display: flex;
     flex-direction: row;
-    margin: 50px 0 50px 0;
+    justify-content: space-around;
 }
 
-.login .remember {
-    display: flex;
-    flex-direction: row-reverse;
-
+.login .rememberCheck {
+    margin-right: 10px;
 }
-
 
 
 .login button {

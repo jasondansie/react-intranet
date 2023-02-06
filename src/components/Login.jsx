@@ -2,6 +2,7 @@ import React from 'react';
 import classes from './Login.module.css'
 import axios from 'axios';
 import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
 
 const Login = () => {
@@ -14,18 +15,23 @@ const Login = () => {
 
     const submitHandler = (e) => {
         e.preventDefault();
-
-        axios.get(`http://localhost:5000/getUser/${userInfo}`)
-            .then(
-                (res) => {
-                    console.log("data", res.data);
-                    setData(res.data);
-                    if (res.data == "") {
-                        alert('user info incorrect');
-                    } else {
-
-                    }
-                });
+        let temp = userInfo.split("&");
+        if (temp[0] === "" || temp[1] === "") {
+            alert('user info is empty');
+        }
+        else {
+            axios.get(`http://localhost:5000/getUser/${userInfo}`)
+                .then(
+                    (res) => {
+                        console.log("data", res.data);
+                        setData(res.data);
+                        if (res.data == "") {
+                            alert('user info incorrect');
+                        } else {
+                            window.location.href = "/adminConsole";
+                        }
+                    });
+        }
     }
 
     const changeHandler = (e) => {
@@ -48,27 +54,25 @@ const Login = () => {
                 </div>
                 <div className={classes.loginMain}>
                     <form action="">
-                        <div className='email'>
+                        <div className={classes.sect1}>
                             <label htmlFor="email">E-mail</label>
-                            <input type="email" name="email" id="email" placeholder='E-mail' onChange={(e) => changeHandler(e)} />
+                            <input className={classes.formInput} type="email" name="email" id="email" placeholder='E-mail' onChange={(e) => changeHandler(e)} />
                         </div>
-                        <div className='password'>
+                        <div className={classes.password}>
                             <label htmlFor="password">Password</label>
-                            <input type="password" name="password" id="password" placeholder='Password' onChange={(e) => changeHandler(e)} />
+                            <input type="password" name="password" className={classes.formInput} placeholder='Password' onChange={(e) => changeHandler(e)} />
                         </div>
                         <div className={classes.selectors}>
-                            <div className='remember'>
-                                <input type="checkbox" name="remember" id="remember" />
+                            <div className={classes.remember}>
+                                <input type="checkbox" name="rememberN" className={classes.rememberCheck} />
                                 <label htmlFor="remember">Remember me</label>
                             </div>
                             <a href="http://" >Forgot Password?</a>
                         </div>
                         <button type="submit" onClick={(e) => submitHandler(e)}>Login</button>
                     </form>
-
                 </div>
             </div>
-
         </div>
     );
 };

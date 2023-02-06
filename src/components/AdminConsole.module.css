@@ -1,0 +1,12 @@
+.adminconsole {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100vw;
+}
+
+.sidemenu {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+}
