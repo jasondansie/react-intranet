@@ -1,3 +1,4 @@
+const { getRandomValues } = require('crypto');
 const mariadb = require('mariadb');
 const config = require('./config');
 
@@ -14,7 +15,7 @@ const getAllUsers = async () => {
 const getSingleUser = async (user, pass) => {
   const connection = await mariadb.createConnection(config.db);
 
-  let result = await connection.query(`SELECT * from users WHERE email = "${user}" AND password ="${pass}"`);
+  let result = await connection.query('SELECT * from users WHERE email = ? AND password = ?' ,[ user, pass]);
 
   delete result.meta;
 

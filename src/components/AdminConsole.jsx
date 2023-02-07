@@ -6,9 +6,12 @@ import classes from './AdminConsole.module.css'
 const AdminConsole = () => {
     return (
         <div className={classes.adminconsole}>
-            <div className={classes.sidemenu}>
-                <SideMenu />
-            </div>
+            <aside className={classes.sidemenu}>
+                <SideMenu
+                    image={"Jason.jpg"}
+                    name={"Jason Dansie"}
+                 />
+            </aside>
             <div className={classes.adminview}>
                 <AdminView />
             </div>

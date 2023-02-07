@@ -1,0 +1,23 @@
+.user{
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-around;
+    align-items: center; */
+    height: 15vh;
+    background-color: rgb(55, 60, 63);
+    color: white;
+}
+
+.user img{
+    width: 35%;
+    height: 80%;
+    border-radius: 55%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.7rem;
+}
+
+.user h4{
+    margin: 2.5rem 0.5rem 0;
+}

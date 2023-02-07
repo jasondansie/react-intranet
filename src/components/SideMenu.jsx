@@ -1,9 +1,14 @@
 import React from 'react';
+import classes from './Sidemenu.module.css'
 
-const SideMenu = () => {
+const SideMenu = ({image, name}) => {
+    let imageUrl = `./images/${image}`
     return (
         <div>
-            <h1>SideMenu</h1>
+            <div className={classes.user}>
+                <img src={imageUrl} alt={name} />
+                <h4>{name}</h4>
+            </div>
         </div>
     );
 };
