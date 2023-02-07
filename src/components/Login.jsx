@@ -2,32 +2,38 @@ import React from 'react';
 import classes from './Login.module.css'
 import axios from 'axios';
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { userInfo, loadUserData }  from './features/UserSlice.js';
 
 
 const Login = () => {
-    const [data, setData] = useState([]);
+    const userData = useSelector(userInfo);
+    const dispatch = useDispatch();
+
+   
     const [user, setUser] = useState("");
     const [pwd, setPwd] = useState("");
 
 
-    let userInfo = `${user}&${pwd}`;
+    let tempUserInfo = `${user}&${pwd}`;
 
     const submitHandler = (e) => {
         e.preventDefault();
-        let temp = userInfo.split("&");
+        let temp = tempUserInfo.split("&");
         if (temp[0] === "" || temp[1] === "") {
             alert('user info is empty');
         }
         else {
-            axios.get(`http://localhost:5000/getUser/${userInfo}`)
+            axios.get(`http://localhost:5000/getUser/${tempUserInfo}`)
                 .then(
                     (res) => {
                         console.log("data", res.data);
-                        setData(res.data);
+                        
                         if (res.data == "") {
                             alert('user info incorrect');
                         } else {
+                            dispatch(loadUserData(res.data));
+                            console.log("store:", userData);
                             window.location.href = "/adminConsole";
                         }
                     });
@@ -42,6 +48,11 @@ const Login = () => {
             setPwd(e.target.value);
         }
     }
+
+    const displayTodoText = () => {
+       
+        
+      }
 
     return (
         <div className={classes.login}>
@@ -72,6 +83,7 @@ const Login = () => {
                         <button type="submit" onClick={(e) => submitHandler(e)}>Login</button>
                     </form>
                 </div>
+                <p>Data: {displayTodoText()}</p>
             </div>
         </div>
     );
