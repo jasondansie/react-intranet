@@ -4,11 +4,22 @@ import classes from './AdminMenu.module.css'
 const AdminMenu = ({image, name}) => {
     let imageUrl = `./images/${image}`;
 
+    const changeHandler = (e) => {
+            console.log("clicked");
+            if(e.target.value === "myprofile"){
+                window.location.href = "/myprofile";    
+            }else if(e.target.value === "Info"){
+                window.location.href = "/info";
+            }else{
+                window.location.href = "/logout";
+            }
+    }
+
     return (
         <div className={classes.adminNav}>
             <div className={classes.hamgergerMenu}>
-                <button type="button" id="sidebarCollapse" class={classes.sidebar_toggle}>
-                <i class="fa fa-bars"></i></button>
+                <button type="button" id="sidebarCollapse" className={classes.sidebar_toggle}>
+                <i className="fa fa-bars"></i></button>
             </div>  
             <div className={classes.mainNav}>
                 <div className={classes.logo}>
@@ -19,9 +30,9 @@ const AdminMenu = ({image, name}) => {
             </div>  
             <div className={classes.dropDownNav}>
                 <img src={imageUrl} alt={name} />
-                <select name="selection" id="selection">
-                    <option value={name} selected hidden>{name}</option>
-                    <option value="My Profile">My Profile</option>
+                <select name="selection" id="selection" onChange={(e) => changeHandler(e)}>
+                    <option value={name} hidden>{name}</option>
+                    <option value="myprofile">My Profile</option>
                     <option value="Info">Info</option>
                     <option value="Logout">Logout</option>                  
                 </select>

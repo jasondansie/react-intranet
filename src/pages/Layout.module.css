@@ -1,0 +1,24 @@
+.adminconsole {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+}
+
+.mainitems{
+    display: flex;
+    flex-direction: column;
+    margin-left: 32vh;
+
+}
+
+.sidemenu {
+    display: flex;
+    flex-direction: column;
+    width: 32vh;
+    background: url("../../public/images/pattern_h.png");
+    background-color: #15283c;
+    color: #fff;
+    position: fixed;
+    height: 100%;
+}

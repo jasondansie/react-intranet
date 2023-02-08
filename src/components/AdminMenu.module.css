@@ -1,7 +1,7 @@
 .adminNav{
     display: flex;
     flex-direction: row;
-    width: 80vw;
+    width: 100%;
     height: 10vh;
     background: #15283c;
 }

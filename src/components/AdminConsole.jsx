@@ -4,6 +4,7 @@ import SideMenu from './SideMenu';
 import classes from './AdminConsole.module.css'
 import { userInfo }  from './features/UserSlice.js';
 import { useSelector } from 'react-redux';
+import { Outlet } from 'react-router-dom';
 
 const AdminConsole = () => {
     const userData = useSelector(userInfo);
@@ -17,7 +18,8 @@ const AdminConsole = () => {
                     name={"Jason Dansie"}
                  />
             </aside>
-            <div className={classes.adminview}>              
+            <div className={classes.adminview}>
+                <Outlet />              
                 <AdminView />
             </div>
         </div>

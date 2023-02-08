@@ -1,14 +1,12 @@
 import React from 'react';
+import { Outlet } from 'react-router-dom';
 import AdminMenu from './AdminMenu';
 
 const AdminView = () => {
     return (
         <div>
-            <AdminMenu
-                    image={"Jason.jpg"}
-                    name={"Jason Dansie"}
-                 />
             <h2>AdimView</h2>
+            
         </div>
     );
 };
