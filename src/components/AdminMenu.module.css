@@ -1,0 +1,56 @@
+.adminNav{
+    display: flex;
+    flex-direction: row;
+    width: 80vw;
+    height: 10vh;
+    background: #15283c;
+}
+
+.hamgergerMenu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 7%;
+    background: #ff5722;
+}
+.sidebar_toggle{
+    border: none;
+   
+    font-size: 4vh;
+    background: #ff5722;
+    margin-right: 0;
+    cursor: pointer;
+}
+
+.mainNav{
+    width: 70%;
+}
+
+.mainNav img {
+    width: 10%;
+    height: 10%;
+    margin: 0.5rem;
+}
+
+.dropDownNav{
+    display:  flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    background: #ff5722;
+    width: 23%;
+    overflow: hidden;
+}
+
+.dropDownNav img{
+    width: 20%;
+    height: 60%;
+    border-radius: 55%;
+}
+
+.adminNav select{
+    height: 40%;
+    background: #ff5722;
+    box-shadow: none;
+    border: none;
+}

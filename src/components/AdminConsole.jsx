@@ -17,7 +17,7 @@ const AdminConsole = () => {
                     name={"Jason Dansie"}
                  />
             </aside>
-            <div className={classes.adminview}>
+            <div className={classes.adminview}>              
                 <AdminView />
             </div>
         </div>
