@@ -1,10 +1,16 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import AdminMenu from '../components/AdminMenu';
+import { userInfo } from '../components/features/UserSlice';
 import Main from '../components/Main';
 import SideMenu from '../components/SideMenu';
 import classes from './Layout.module.css'
 
-const layout = () => {
+const Layout = () => {
+
+    const userD = useSelector(userInfo);
+    console.log("data: ", userD);
+
     return (
         <div className={classes.adminconsole}>
             <aside className={classes.sidemenu}>
@@ -12,9 +18,9 @@ const layout = () => {
                     image={"Jason.jpg"}
                     name={"Jason Dansie"}
                 />
-            </aside> 
+            </aside>
             <div className={classes.mainitems}>
-                
+
                 <div className={classes.topmenu}>
                     <AdminMenu
                         image={"Jason.jpg"}
@@ -23,11 +29,11 @@ const layout = () => {
                 </div>
                 <div className={classes.maincontent}>
                     <Main />
-                </div>  
-            </div>                                             
+                </div>
+            </div>
         </div>
-        
+
     );
 };
 
-export default layout;
+export default Layout;

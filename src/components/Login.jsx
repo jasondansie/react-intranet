@@ -1,42 +1,61 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classes from './Login.module.css'
 import axios from 'axios';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { userInfo, loadUserData }  from './features/UserSlice.js';
+import { userInfo, loadUserData, fetchSingleUser } from './features/UserSlice.js';
 
 
 const Login = () => {
-    const userData = useSelector(userInfo);
+    const userD = useSelector(userInfo);
     const dispatch = useDispatch();
 
-   
+    let errorMsg = ""
+
+
     const [user, setUser] = useState("");
     const [pwd, setPwd] = useState("");
 
 
     let tempUserInfo = `${user}&${pwd}`;
 
+
+    useEffect(() => {
+        dispatch(fetchSingleUser(`getUser/${tempUserInfo}`))
+    }, [dispatch, tempUserInfo])
+
+
     const submitHandler = (e) => {
         e.preventDefault();
-        let temp = tempUserInfo.split("&");
-        if (temp[0] === "" || temp[1] === "") {
+        if (user === "" || pwd === "") {
             alert('user info is empty');
+            errorMsg = 'user info is empty'
         }
         else {
-            axios.get(`http://localhost:5000/getUser/${tempUserInfo}`)
-                .then(
-                    (res) => {
-                        console.log("data", res.data);
-                        
-                        if (res.data == "") {
-                            alert('user info incorrect');
-                        } else {
-                            dispatch(loadUserData(res.data));
-                            console.log("store:", userData);
-                            window.location.href = "/adminConsole";
-                        }
-                    });
+
+
+            if (userD == "") {
+                alert('user info incorrect');
+            } else {
+
+                console.log("store:", userD);
+                // window.location.href = "/";
+            }
+            //dispatch(userData)
+
+            // axios.get(`http://localhost:5000/getUser/${tempUserInfo}`)
+            //     .then(
+            //         (res) => {
+            //             console.log("data", res.data);
+
+            //             if (res.data == "") {
+            //                 alert('user info incorrect');
+            //             } else {
+            //                 dispatch(loadUserData(res.data));
+            //                 console.log("store:", userData);
+            //                 window.location.href = "/";
+            //             }
+            //         });
         }
     }
 
@@ -49,10 +68,12 @@ const Login = () => {
         }
     }
 
-    const displayTodoText = () => {
-       
-        
-      }
+    const displayErrorText = () => {
+        // return userD.map((user) => (
+        //     user.userid
+        // ))
+
+    }
 
     return (
         <div className={classes.login}>
@@ -83,7 +104,7 @@ const Login = () => {
                         <button type="submit" onClick={(e) => submitHandler(e)}>Login</button>
                     </form>
                 </div>
-                <p>Data: {displayTodoText()}</p>
+                <p>Data: {errorMsg}</p>
             </div>
         </div>
     );
