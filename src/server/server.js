@@ -1,9 +1,17 @@
+require('dotenv').config();
+
 var express = require('express');
 var app = express();
-const db = require('./database');
+
 const cors = require('cors');
+const db = require('./database');
+const jwt = require('jsonwebtoken');
+
+
 
 app.use(cors());
+app.use(express.json());
+
 
 const getAllU =  async () =>{
     let result = await db.getAllUsers();
@@ -25,7 +33,38 @@ app.get('/getuser/:email', async function (req, res) {
     res.send(recordset);     
 });
 
-var server = app.listen(5000, function () {
+app.post('/getSingleUser', async function (req, res) {  
+    const { email, password } = req.body;
+
+    try {
+        let foundUser = await db.findUserName(email);
+        const jwtSecret = process.env.JWT_SECRET;
+        console.log("foundUser",foundUser);
+        console.log("env",jwtSecret);  
+      
+      if (foundUser.length === 0) return res.status(400).json({ msg: 'Invalid Credentials' });
+  
+      let user = await getSingleU(email, password);
+      
+      if (user.length === 0) return res.status(400).json({ msg: 'Invalid Credentials' });
+  
+      const payload = { user: { id: user.id } };
+      jwt.sign(
+        payload,
+        process.env.REACT_APP_JWT_SECRET,
+        { expiresIn: 3600 },
+        (err, token) => {
+          if (err) throw err;
+          res.json({ token });
+        }
+      );
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }  
+})
+
+app.listen(5000, function () {
     console.log('Server is running on port 5000..');
 });
 

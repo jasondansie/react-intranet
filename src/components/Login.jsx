@@ -1,7 +1,7 @@
 import classes from './Login.module.css'
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchSingleUser, isLoading, isAuthenticated } from './features/UserSlice.js';
+import {isLoading, isAuthenticated } from './features/UserSlice.js';
 
 
 const Login = () => {
@@ -30,7 +30,7 @@ const Login = () => {
         }
         else {
             dispatch(isLoading(true));
-            dispatch(fetchSingleUser(`getUser/${tempUserInfo}`));
+            // dispatch(fetchSingleUser(`getUser/${tempUserInfo}`));
             console.log("user1: ", userD);
             dispatch(isLoading(false));
             dispatch(isAuthenticated(true));
@@ -45,13 +45,6 @@ const Login = () => {
         else {
             setPwd(e.target.value);
         }
-    }
-
-    const displayErrorText = () => {
-        // return userD.map((user) => (
-        //     user.userid
-        // ))
-
     }
 
     if (loading) return (<ShowSpinner />)

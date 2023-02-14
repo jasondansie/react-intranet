@@ -12,24 +12,30 @@ const AdminConsole = () => {
 
     return (
         <div className={classes.adminconsole}>
-            <aside className={classes.sidemenu}>
-                <SideMenu
-                    image={userData.photofilename}
-                    name={`${userData[0].firstname} ${userData[0].lastname}`}
-                />
-            </aside>
-            <div className={classes.mainitems}>
+            {userData.map((user) => {
+                return (
+                    <div>
+                        <aside className={classes.sidemenu}>
+                            <SideMenu
+                                image={user.photofilename}
+                                name={`${user.firstname} ${user.lastname}`}
+                            />
+                        </aside>
+                        <div className={classes.mainitems}>
 
-                <div className={classes.topmenu}>
-                    <AdminMenu
-                        image={userData[0].photofilename}
-                        name={`${userData[0].firstname} ${userData[0].lastname}`}
-                    />
-                </div>
-                <div className={classes.maincontent}>
-                    <Main />
-                </div>
-            </div>
+                            <div className={classes.topmenu}>
+                                <AdminMenu
+                                    image={user.photofilename}
+                                    name={`${user.firstname} ${user.lastname}`}
+                                />
+                            </div>
+                            <div className={classes.maincontent}>
+                                <Main />
+                            </div>
+                        </div>   
+                    </div>        
+                )
+            })}     
         </div>
     );
 };

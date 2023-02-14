@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import dbService from '../../services/dbUtils'
+// import dbService from '../../services/dbUtils'
 
 export const userSlice = createSlice({
     name: 'userData',
@@ -22,23 +22,23 @@ export const userSlice = createSlice({
     },
 })
 
-export const fetchSingleUser = (endpoint) => {
+// export const fetchSingleUser = (endpoint) => {
    
-    return async (dispatch) => {
-        const user = await dbService.getSingleUser(endpoint);
-        console.log("user: ", user);
-        if(user.length === 0){
-            dispatch(isLoading(false));
-            alert('user info incorrect'); 
-        }else{
-            dispatch(loadUserData(user));
-            dispatch(isLoading(false));
+//     return async (dispatch) => {
+//         const user = await dbService.getSingleUser(endpoint);
+//         console.log("user: ", user);
+//         if(user.length === 0){
+//             dispatch(isLoading(false));
+//             alert('user info incorrect'); 
+//         }else{
+//             dispatch(loadUserData(user));
+//             dispatch(isLoading(false));
           
-            //window.location.href = "/"
-        }
+//             //window.location.href = "/"
+//         }
       
-    }
-}
+//     }
+// }
 
 export const { loadUserData, isLoading, isAuthenticated } = userSlice.actions;
 export const userInfo = (state) => state.user.userData;
