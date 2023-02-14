@@ -1,26 +1,34 @@
 import React from 'react';
-import AdminView from './AdminView';
 import SideMenu from './SideMenu';
 import classes from './AdminConsole.module.css'
-import { userInfo }  from './features/UserSlice.js';
 import { useSelector } from 'react-redux';
-import { Outlet } from 'react-router-dom';
+import AdminMenu from './AdminMenu';
+import Main from './Main';
 
 const AdminConsole = () => {
-    const userData = useSelector(userInfo);
+    const userData = useSelector((state) => state.user.userData);
+
     console.log("admin:", userData);
 
     return (
         <div className={classes.adminconsole}>
             <aside className={classes.sidemenu}>
                 <SideMenu
-                    image={"Jason.jpg"}
-                    name={"Jason Dansie"}
-                 />
+                    image={userData.photofilename}
+                    name={`${userData[0].firstname} ${userData[0].lastname}`}
+                />
             </aside>
-            <div className={classes.adminview}>
-                <Outlet />              
-                <AdminView />
+            <div className={classes.mainitems}>
+
+                <div className={classes.topmenu}>
+                    <AdminMenu
+                        image={userData[0].photofilename}
+                        name={`${userData[0].firstname} ${userData[0].lastname}`}
+                    />
+                </div>
+                <div className={classes.maincontent}>
+                    <Main />
+                </div>
             </div>
         </div>
     );

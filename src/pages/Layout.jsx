@@ -1,38 +1,22 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import AdminMenu from '../components/AdminMenu';
-import { userInfo } from '../components/features/UserSlice';
-import Main from '../components/Main';
-import SideMenu from '../components/SideMenu';
-import classes from './Layout.module.css'
+import AdminConsole from '../components/AdminConsole';
+import Login from '../components/Login';
+
 
 const Layout = () => {
+    const userD = useSelector((state) => state.user.userInfo);
+    const authenticated = useSelector((state) => state.user.isAuthenticated);
 
-    const userD = useSelector(userInfo);
-    console.log("data: ", userD);
+    console.log("auth:", authenticated);
+    console.log("user2: ", userD);
 
     return (
-        <div className={classes.adminconsole}>
-            <aside className={classes.sidemenu}>
-                <SideMenu
-                    image={"Jason.jpg"}
-                    name={"Jason Dansie"}
-                />
-            </aside>
-            <div className={classes.mainitems}>
-
-                <div className={classes.topmenu}>
-                    <AdminMenu
-                        image={"Jason.jpg"}
-                        name={"Jason Dansie"}
-                    />
-                </div>
-                <div className={classes.maincontent}>
-                    <Main />
-                </div>
-            </div>
-        </div>
-
+        <div>
+            {
+                !authenticated ? (<Login />) : (<AdminConsole />)
+            }
+        </div >
     );
 };
 

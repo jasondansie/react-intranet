@@ -12,10 +12,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/login' element={<Login />}></Route>
         <Route path='/' element={<Layout />}>
           <Route index element={<Home />}></Route>
-          <Route path='/adminConsole' element={<Layout />}> </Route>
           <Route path='/myprofile' element={<MyProfile />}> </Route>
           <Route path='/info' element={<Info />}></Route>
           <Route path='/logout' element={<Logout />}></Route>

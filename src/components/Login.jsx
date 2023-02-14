@@ -1,61 +1,40 @@
-import React, { useEffect } from 'react';
 import classes from './Login.module.css'
-import axios from 'axios';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { userInfo, loadUserData, fetchSingleUser } from './features/UserSlice.js';
+import { fetchSingleUser, isLoading, isAuthenticated } from './features/UserSlice.js';
 
 
 const Login = () => {
-    const userD = useSelector(userInfo);
     const dispatch = useDispatch();
 
-    let errorMsg = ""
-
+    const userD = useSelector((state) => state.user.userInfo);
+    const loading = useSelector((state) => state.user.isLoading)
 
     const [user, setUser] = useState("");
     const [pwd, setPwd] = useState("");
 
-
     let tempUserInfo = `${user}&${pwd}`;
 
-
-    useEffect(() => {
-        dispatch(fetchSingleUser(`getUser/${tempUserInfo}`))
-    }, [dispatch, tempUserInfo])
-
+    const ShowSpinner = () => {
+        if (loading) {
+            return <div className={classes.spinner} >
+                <div className={classes.head}></div>
+            </div>
+        }
+    }
 
     const submitHandler = (e) => {
         e.preventDefault();
         if (user === "" || pwd === "") {
             alert('user info is empty');
-            errorMsg = 'user info is empty'
         }
         else {
+            dispatch(isLoading(true));
+            dispatch(fetchSingleUser(`getUser/${tempUserInfo}`));
+            console.log("user1: ", userD);
+            dispatch(isLoading(false));
+            dispatch(isAuthenticated(true));
 
-
-            if (userD == "") {
-                alert('user info incorrect');
-            } else {
-
-                console.log("store:", userD);
-                // window.location.href = "/";
-            }
-            //dispatch(userData)
-
-            // axios.get(`http://localhost:5000/getUser/${tempUserInfo}`)
-            //     .then(
-            //         (res) => {
-            //             console.log("data", res.data);
-
-            //             if (res.data == "") {
-            //                 alert('user info incorrect');
-            //             } else {
-            //                 dispatch(loadUserData(res.data));
-            //                 console.log("store:", userData);
-            //                 window.location.href = "/";
-            //             }
-            //         });
         }
     }
 
@@ -75,9 +54,12 @@ const Login = () => {
 
     }
 
+    if (loading) return (<ShowSpinner />)
+
     return (
         <div className={classes.login}>
             <div className={classes.container}>
+
                 <div className={classes.logo}>
                     <div className='companyLogo'>
                         <img src="https://www.goodcall.fi/wp-content/uploads/2021/05/logo2.png" alt="" />
@@ -104,7 +86,7 @@ const Login = () => {
                         <button type="submit" onClick={(e) => submitHandler(e)}>Login</button>
                     </form>
                 </div>
-                <p>Data: {errorMsg}</p>
+
             </div>
         </div>
     );

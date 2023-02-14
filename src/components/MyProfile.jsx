@@ -1,9 +1,16 @@
 import React from 'react';
+import classes from './MyProfile.module.css'
 
 const MyProfile = () => {
     return (
-        <div>
-            <h1>My Profile</h1>
+        <div className={classes.MyProfile}>
+            <div className={classes.pageHeading}>
+                <h2>My Profile</h2>
+
+            </div>
+            <div className={classes.userProfile}>
+
+            </div>
         </div>
     );
 };
