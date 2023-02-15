@@ -3,6 +3,7 @@ var app = express();
 const db = require('./database');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
+const { useActionData } = require('react-router-dom');
 
 require('dotenv').config(); 
 
@@ -32,8 +33,6 @@ app.get('/getuser/:email', async function (req, res) {
 app.post('/getSingleUser', async function (req, res) {
     const {email, pwd} = req.body;
 
-    console.log(`email: ${email} password: ${pwd}`);
-
     try {
         
         const user = await db.checkForUser(email);
@@ -43,7 +42,7 @@ app.post('/getSingleUser', async function (req, res) {
         // const isMatch = await bcrypt.compare(password, user.password);
         // if (!isMatch) return res.status(400).json({ msg: 'Invalid Credentials' });
     
-        const payload = { user: { id: userData.id } };
+        const payload = { user: { id: userData.id, firstname: userData.firstname } };
         jwt.sign(
           payload,
           process.env.REACT_APP_TOKEN_KEY,
