@@ -14,7 +14,7 @@ const getAllUsers = async () => {
 const getSingleUser = async (user, pass) => {
   const connection = await mariadb.createConnection(config.db);
 
-  let result = await connection.query('SELECT * from users WHERE email = ? AND password = ?' ,[ user, pass]);
+  let result = await connection.query('SELECT `userid`, `createddate`, `createdby`, `accessid`, `firstname`, `lastname`, `email`,  `enabled`, `resetpassword`, `resetpasswordtime`, `photofilename`, `position`, `company`, `author_description`, `author_title`, `author_sig`, `author_image`, `startdate` FROM `users` WHERE email = ?  AND password = ?' ,[ user, pass]);
 
   delete result.meta;
 
