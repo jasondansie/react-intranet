@@ -15,15 +15,15 @@ const AdminConsole = () => {
             <aside className={classes.sidemenu}>
                 <SideMenu
                     image={userData.photofilename}
-                    name={`${userData[0].firstname} ${userData[0].lastname}`}
+                    name={`${userData.firstname} ${userData.lastname}`}
                 />
             </aside>
             <div className={classes.mainitems}>
 
                 <div className={classes.topmenu}>
                     <AdminMenu
-                        image={userData[0].photofilename}
-                        name={`${userData[0].firstname} ${userData[0].lastname}`}
+                        image={userData.photofilename}
+                        name={`${userData.firstname} ${userData.lastname}`}
                     />
                 </div>
                 <div className={classes.maincontent}>

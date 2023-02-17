@@ -1,23 +1,45 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
 const db = require('./database');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
-const Sequelize = require('sequelize');
-
+const config = require('./config');
 
 require('dotenv').config(); 
-const config = require('./config');
+
+const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(config.db.database, config.db.user, config.db.password, {
   dialect: 'mysql',
-  host: 'localhost'
+  host: config.db.host
 });
 
-const User = require('./models/User2');
+const User = require('./models/User')(sequelize);
 
 app.use(cors());
 app.use(express.json());
+
+
+const addUser1 = (firstname, lastname, email, password, photofilename,  createdby = "1", accessid = "2", enabled = "1", position = "none", company = "Good Call", resetpassword = true) => (async () => {
+  await sequelize.sync(); // sync the model with the database
+  const user = await User.create({
+    firstname:{firstname},
+    lastname: {lastname},
+    email: {email},
+    password: {password},
+    createdby: {createdby},
+    accessid: {accessid},
+    enabled: {enabled},
+    photofilename:{photofilename},
+    position: {position},
+    company: {company},
+    resetpassword: {resetpassword},
+    
+  });
+  
+  console.log(user.toJSON()); // print the inserted user object
+})();
+
 
 const getAllU =  async () =>{
     let result = await db.getAllUsers();
@@ -64,7 +86,15 @@ app.post('/getSingleUser', async function (req, res) {
 
     try {
       console.log("trying user:");
-      const user = await User.findOne({ where: { email } });
+      const user =await User.findOne({ where: { email: email } })
+        .then(user => {
+          console.log(user);
+          return user;
+        })
+        .catch(err => {
+          console.error(err);
+      })
+      // const user = await User.findOne({ where: { email: email } });
         // const user = await db.checkForUser(email);
         if (!user || pwd !== user.password) {
           return res.status(401).json({ error: 'Invalid email or password' });
@@ -82,6 +112,7 @@ app.post('/getSingleUser', async function (req, res) {
           (err, token) => {
             if (err) throw err;
             res.json({ token });
+
           }
         );
       } catch (err) {
@@ -89,6 +120,10 @@ app.post('/getSingleUser', async function (req, res) {
         res.status(500).send('Server Error');
       }    
 });
+
+// addUser("Jason", "Dansie", "jasondansie@gmail.com", 'Passwd123', "Jason.jpg");
+// addUser("Stina", "Dansie", "stina@goodcall.fi", "Passwd123", "Stina.jpg");
+// addUser("Sakke", "Turunen", "Sakke@goodcall.fi", "Passwd123", "Sakke.jpg");
 
 app.listen(5000, function () {
     console.log('Server is running on port 5000..');

@@ -2,6 +2,7 @@ import classes from './Login.module.css'
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../actions/authActions';
+import { isLoading, isAuthenticated } from './features/UserSlice.js';
 
 
 const Login2 = () => {
@@ -21,9 +22,12 @@ const Login2 = () => {
         }
     }
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
+        dispatch(isLoading(true));
         e.preventDefault();
-        dispatch(login({ email, pwd }))
+        await dispatch(login({ email, pwd }));
+        dispatch(isLoading(false));
+        // dispatch(isAuthenticated(true));
     }
 
     if (loading) return (<ShowSpinner />)

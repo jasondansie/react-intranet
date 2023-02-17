@@ -1,14 +1,48 @@
-const { Model, DataTypes, Sequelize } = require('sequelize');
-const config = require('../config');
+const { DataTypes } = require('sequelize');
 
-const sequelize = new Sequelize(`mysql://${config.db.user}:${config.db.password}@${config.db.host}/${config.db.database}`);
-
-class User extends Model {}
-User.define({
-  userid: DataTypes.INTEGER,
-  firstname: DataTypes.STRING,
-  lastname: DataTypes.STRING,
-  email: DataTypes.STRING,
-}, { sequelize, modelName: 'user' });
-
-module.exports = User;
+module.exports = function(sequelize) {
+    return sequelize.define('user', {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true
+    },
+    firstName: {
+      type: DataTypes.STRING
+    },
+    lastName: {
+      type: DataTypes.STRING
+    },
+    email: {
+      type: DataTypes.STRING,
+      unique: true
+    },
+    password: {
+      type: DataTypes.STRING
+    },
+    photoFilename: {
+      type: DataTypes.STRING
+    },
+    createdBy: {
+      type: DataTypes.INTEGER
+    },
+    accessId: {
+      type: DataTypes.INTEGER
+    },
+    enabled: {
+      type: DataTypes.INTEGER
+    },
+    position: {
+      type: DataTypes.STRING
+    },
+    company: {
+      type: DataTypes.STRING
+    },
+    resetPassword: {
+      type: DataTypes.BOOLEAN
+    },
+    resetPasswordTime: {
+      type: DataTypes.DATE
+    }
+  });
+};
