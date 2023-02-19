@@ -5,9 +5,12 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const config = require('./config');
 
+
 require('dotenv').config(); 
 
 const { Sequelize } = require('sequelize');
+const authMiddleware = require('./authMiddleware');
+
 
 const sequelize = new Sequelize(config.db.database, config.db.user, config.db.password, {
   dialect: 'mysql',
@@ -51,28 +54,33 @@ const getSingleU =  async (user, pass) =>{
     return result;  
 }
 
-// middleware to verify JWT
-function verifyToken(req, res, next) {
-    const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1];
-    if (token == null) return res.sendStatus(401);
-  
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-      if (err) return res.sendStatus(403);
-      req.user = user;
-      next();
-    });
-  }
-  
-  // protected route
-  app.get('/api/getData', verifyToken, (req, res) => {
-    const user = User.find(u => u.id === req.user.id);
-    res.json(user.data);
+
+
+  app.get('/protected', authMiddleware, (req, res) => {
+    res.send(`Hello, ${req.user.firstname}!`);
   });
+  
+  app.get('/getUserData', (req, res) => {
+  
+ 
+  // User.findByPk(userId)
+  // .then(user => {
+  //   // Return the user data as a JSON response to the client
+  //   res.json(user);
+  // })
+  // .catch(err => {
+  //   console.error(err);
+  //   res.status(500).json({ error: 'Internal server error' });
+  // });
+});
+  
 
 app.get('/getall', async function (req, res) {
-    let recordset = await getAllU();
-    res.send(recordset);     
+    // let recordset = await getAllU();
+    // res.send(recordset);  
+    console.log("header", req.headers.authorization);   
+    
+
 });
 
 app.get('/getuser/:email', async function (req, res) {
@@ -81,28 +89,23 @@ app.get('/getuser/:email', async function (req, res) {
     res.send(recordset);     
 });
 
-app.post('/getSingleUser', async function (req, res) {
+app.post('/autorizeUser', async function (req, res) {
     const {email, pwd} = req.body;
 
     try {
       console.log("trying user:");
-      const user =await User.findOne({ where: { email: email } })
-        .then(user => {
-          console.log(user);
+      const user =await User.findOne({  attributes: ['id', 'firstName', 'password'],
+      where: { email: email } })
+        .then(user => {      
           return user;
         })
         .catch(err => {
           console.error(err);
       })
-      // const user = await User.findOne({ where: { email: email } });
-        // const user = await db.checkForUser(email);
+   
         if (!user || pwd !== user.password) {
           return res.status(401).json({ error: 'Invalid email or password' });
         }
-        // const userData = await db.getSingleUser(email, pwd );
-    
-        // const isMatch = await bcrypt.compare(password, user.password);
-        // if (!isMatch) return res.status(400).json({ msg: 'Invalid Credentials' });
     
         const payload = { user: { userid: user.id, firstname: user.lastname } };
         jwt.sign(

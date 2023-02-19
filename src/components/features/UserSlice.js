@@ -7,6 +7,7 @@ export const userSlice = createSlice({
         userData: [],
         isLoading: false,
         isAuthenticated: false,
+        userToken: "",
     },
 
     reducers: {
@@ -14,10 +15,13 @@ export const userSlice = createSlice({
             state.userData = action.payload;
         },
         isLoading(state, action){
-            state.isLoading = action.payload
+            state.isLoading = action.payload;
         },
         isAuthenticated(state, action){
-            state.isAuthenticated = action.payload
+            state.isAuthenticated = action.payload;
+        },
+        addToken(state, action){
+            state.userToken = action.payload;
         }
     },
 })
@@ -40,6 +44,6 @@ export const fetchSingleUser = (endpoint) => {
     }
 }
 
-export const { loadUserData, isLoading, isAuthenticated } = userSlice.actions;
+export const { loadUserData, isLoading, isAuthenticated, addToken } = userSlice.actions;
 export const userInfo = (state) => state.user.userData;
 export default userSlice.reducer;

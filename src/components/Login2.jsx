@@ -27,7 +27,7 @@ const Login2 = () => {
         e.preventDefault();
         await dispatch(login({ email, pwd }));
         dispatch(isLoading(false));
-        // dispatch(isAuthenticated(true));
+        dispatch(isAuthenticated(true));
     }
 
     if (loading) return (<ShowSpinner />)
