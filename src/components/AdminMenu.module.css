@@ -23,7 +23,7 @@
 }
 
 .mainNav{
-    width: 70%;
+    width: 75%;
 }
 
 .mainNav img {
@@ -38,7 +38,7 @@
     justify-content: space-evenly;
     align-items: center;
     background: #ff5722;
-    width: 23%;
+    width: 18%;
     overflow: hidden;
 }
 

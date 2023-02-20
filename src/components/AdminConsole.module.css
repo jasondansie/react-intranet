@@ -1,8 +1,6 @@
 .adminconsole {
     display: flex;
     flex-direction: row;
-    height: 100vh;
-    width: 100vw;
 }
 
 .sidemenu {
@@ -19,8 +17,8 @@
     height: 100%;
 }
 
-.adminview{
-    display: flex;
+
+.mainitems{
     margin-left: 20%;
     width: 80%;
 }

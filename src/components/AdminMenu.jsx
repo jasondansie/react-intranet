@@ -13,7 +13,7 @@ const AdminMenu = ({image, name}) => {
             }else if(e.target.value === "Info"){
                 navigation("/info");
             }else{
-                navigation("/myprlogoutofile");
+                navigation("/logout");
             }
     }
 
