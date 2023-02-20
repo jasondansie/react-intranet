@@ -56,23 +56,21 @@ const getSingleU =  async (user, pass) =>{
 
 
 
-  app.get('/protected', authMiddleware, (req, res) => {
-    res.send(`Hello, ${req.user.firstname}!`);
+  app.get('/protected', authMiddleware, async function (req, res) {
+
+    User.findByPk(req.user.userid)
+    .then(user => {
+      // Return the user data as a JSON response to the client
+      console.log("fetched: ", user);
+      res.json(user);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({ error: 'Internal server error' });
+    });
+      // res.send(`Hello, ${req.user.id}!`); 
   });
   
-  app.get('/getUserData', (req, res) => {
-  
- 
-  // User.findByPk(userId)
-  // .then(user => {
-  //   // Return the user data as a JSON response to the client
-  //   res.json(user);
-  // })
-  // .catch(err => {
-  //   console.error(err);
-  //   res.status(500).json({ error: 'Internal server error' });
-  // });
-});
   
 
 app.get('/getall', async function (req, res) {
@@ -94,9 +92,10 @@ app.post('/autorizeUser', async function (req, res) {
 
     try {
       console.log("trying user:");
-      const user =await User.findOne({  attributes: ['id', 'firstName', 'password'],
+      const user =await User.findOne({  attributes: ['id', 'firstname', 'password'],
       where: { email: email } })
-        .then(user => {      
+        .then(user => { 
+          console.log("user: ", user);     
           return user;
         })
         .catch(err => {
@@ -106,8 +105,14 @@ app.post('/autorizeUser', async function (req, res) {
         if (!user || pwd !== user.password) {
           return res.status(401).json({ error: 'Invalid email or password' });
         }
-    
-        const payload = { user: { userid: user.id, firstname: user.lastname } };
+
+        const payload = { 
+          user: { 
+            userid: user.id,
+            firstname: user.firstname 
+          } 
+        };
+
         jwt.sign(
           payload,
           process.env.REACT_APP_TOKEN_KEY,

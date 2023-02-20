@@ -23,8 +23,9 @@ const Login2 = () => {
     }
 
     const submitHandler = async (e) => {
-        dispatch(isLoading(true));
         e.preventDefault();
+
+        dispatch(isLoading(true));
         await dispatch(login({ email, pwd }));
         dispatch(isLoading(false));
         dispatch(isAuthenticated(true));

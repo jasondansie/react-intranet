@@ -1,17 +1,19 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import classes from './AdminMenu.module.css'
 
 const AdminMenu = ({image, name}) => {
+    const navigation = useNavigate();
     let imageUrl = `./images/${image}`;
 
     const changeHandler = (e) => {
             console.log("clicked");
             if(e.target.value === "myprofile"){
-                window.location.href = "/myprofile";    
+                navigation("/myprofile");    
             }else if(e.target.value === "Info"){
-                window.location.href = "/info";
+                navigation("/info");
             }else{
-                window.location.href = "/logout";
+                navigation("/myprlogoutofile");
             }
     }
 
