@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 import classes from './AdminConsole.module.css'
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,7 +15,6 @@ const AdminConsole = () => {
     const userData = useSelector((state) => state.user.userData);
     const userToken = useSelector((state) => state.user.userToken);
 
-    const [userinfo, setUserinfo] = useState([]);
    
     useEffect(() => {
         axios.get('http://localhost:5000/protected', {
@@ -26,65 +25,35 @@ const AdminConsole = () => {
             .then(response => {
                 console.log("response",response.data);
                 dispatch(loadUserData(response.data));
-                setUserinfo(response.data);
             })
             .catch(error => {
                 console.error(error);
             });
     }, [dispatch, userToken]);
     
+   
+    return (
+        <div className={classes.adminconsole}>                 
+            <aside className={classes.sidemenu}>
+                <Sidemenu
+                    name={`${userData.firstName} ${userData.lastName}`}
+                    image={userData.photoFilename}
+                />
+            </aside>
+            <div className={classes.mainitems}>
 
-    // userinfo.map((user) => {
-    //         return (
-    //             <div className={classes.adminconsole}>                 
-    //                 <aside className={classes.sidemenu}>
-    //                     <Sidemenu
-    //                         image={user.photofilename}
-    //                         name={`${user.firstname} ${user.lastname}`}
-    //                     />
-    //                 </aside>
-    //                 <div className={classes.mainitems}>
-        
-    //                     <div className={classes.topmenu}>
-    //                         <AdminMenu
-    //                             image={user.photofilename}
-    //                             name={`${user.firstname} ${user.lastname}`}
-    //                         />
-    //                     </div>
-    //                     <div className={classes.maincontent}>
-    //                         <Main />
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         );
-    //     })
-
-    
-    
-
-    console.log("userData: ", userData.firstName);
-        return (
-            <div className={classes.adminconsole}>                 
-                <aside className={classes.sidemenu}>
-                    <Sidemenu
-                        name={`${userData.firstName} ${userData.lastName}`}
+                <div className={classes.topmenu}>
+                    <AdminMenu
+                        name={`${userData.firstName} ${userData.lastName}` }
                         image={userData.photoFilename}
                     />
-                </aside>
-                <div className={classes.mainitems}>
-    
-                    <div className={classes.topmenu}>
-                        <AdminMenu
-                           name={`${userData.firstName} ${userData.lastName}` }
-                           image={userData.photoFilename}
-                        />
-                    </div>
-                    <div className={classes.maincontent}>
-                        <Main />
-                    </div>
+                </div>
+                <div className={classes.maincontent}>
+                    <Main />
                 </div>
             </div>
-        );
+        </div>
+    );
     
 };
 

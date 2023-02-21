@@ -6,7 +6,7 @@ const SideMenu = ({image, name}) => {
     return (
         <div>
             <div className={classes.user}>
-                <img src={imageUrl} alt={name} />
+                <img className={classes.roundImage} src={imageUrl} alt={name} />
                 <h4>{name}</h4>
             </div>
         </div>
