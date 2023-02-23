@@ -13,9 +13,13 @@
     width: 7%;
     background: #ff5722;
 }
+.hamgergerMenu i{
+    margin: 0;
+    width: 100%;
+   
+}
 .sidebar_toggle{
     border: none;
-   
     font-size: 4vh;
     background: #ff5722;
     margin-right: 0;
@@ -46,6 +50,7 @@
     width: 20%;
     height: 60%;
     border-radius: 55%;
+    
 }
 
 .adminNav select{
@@ -53,4 +58,5 @@
     background: #ff5722;
     box-shadow: none;
     border: none;
+    color: white;
 }

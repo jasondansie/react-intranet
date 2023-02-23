@@ -7,7 +7,6 @@ const AdminMenu = ({image, name}) => {
     let imageUrl = `./images/${image}`;
 
     const changeHandler = (e) => {
-            console.log("clicked");
             if(e.target.value === "myprofile"){
                 navigation("/myprofile");    
             }else if(e.target.value === "Info"){
