@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { useState } from "react";
 import { Data } from "./Data";
 import { Line } from "react-chartjs-2";
-import {Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend,} from 'chart.js';
+import {Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler} from 'chart.js';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
 
 const Home = () => {
   const userToken = useSelector((state) => state.user.userToken);
@@ -37,8 +37,9 @@ const Home = () => {
           {
             label: "Profit",
             data: profit,
-            fill: false,
-            borderColor: "#742774"
+            fill: true,
+            backgroundColor: "rgba(108, 47, 214,0.6)",
+            borderColor: "#747427"
           }
         ]
       };
