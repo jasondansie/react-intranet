@@ -1,68 +1,86 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from "react";
 import { Data } from "./Data";
-import LineChart from './LineChart';
 import { Line } from "react-chartjs-2";
-import {
-    Chart as ChartJS,
-    CategoryScale,
-    LinearScale,
-    PointElement,
-    LineElement,
-    Title,
-    Tooltip,
-    Legend,
-  } from 'chart.js';
-  
-  ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
+import {Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend,} from 'chart.js';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 const Home = () => {
-    const [chartData, setChartData] = useState({
-        labels: Data.map((data) => data.year), 
+  const userToken = useSelector((state) => state.user.userToken);
+
+  const [data, setData] = useState(null);
+  
+  useEffect(() => {
+    axios.get('http://localhost:5000/finances', {
+      headers: {
+        Authorization: userToken
+      }
+    })
+    .then(response => {
+      const month = response.data.map(item => item.month);
+      const profit = response.data.map(item => item.profit);
+      const revenue = response.data.map(item => item.revenue);
+  
+      const data = {
+        labels: month,
         datasets: [
           {
-            label: "Users Gained ",
-            data: Data.map((data) => data.userGain),
-            backgroundColor: [
-              "rgba(75,192,192,1)",
-              "#ecf0f1",
-              "#50AF95",
-              "#f3ba2f",
-              "#2a71d0"
-            ],
-            borderColor: "black",
-            borderWidth: 2
+            label: "Revenue",
+            data: revenue,
+            fill: true,
+            backgroundColor: "rgba(75,192,192,0.2)",
+            borderColor: "rgba(75,192,192,1)"
+          },
+          {
+            label: "Profit",
+            data: profit,
+            fill: false,
+            borderColor: "#742774"
           }
         ]
-      });
+      };
+  
+      setData(data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }, [userToken]);
 
 
 
-const data = {
-  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-  datasets: [
-    {
-      label: "First dataset",
-      data: [33, 53, 85, 41, 44, 65],
-      fill: true,
-      backgroundColor: "rgba(75,192,192,0.2)",
-      borderColor: "rgba(75,192,192,1)"
-    },
-    {
-      label: "Second dataset",
-      data: [33, 25, 35, 51, 54, 76],
-      fill: false,
-      borderColor: "#742774"
-    }
-  ]
-};
+    // const [chartData, setChartData] = useState({
+    //     labels: Data.map((data) => data.year), 
+    //     datasets: [
+    //       {
+    //         label: "Users Gained ",
+    //         data: Data.map((data) => data.userGain),
+    //         backgroundColor: [
+    //           "rgba(75,192,192,0.2)",
+    //           "#ecf0f1",
+    //           "#50AF95",
+    //           "#f3ba2f",
+    //           "#2a71d0"
+    //         ],
+    //         fill: true,
+    //         borderColor: "black",
+    //         borderWidth: 2
+    //       }
+    //     ]
+    //   });
+
+     
+
     
       return (
         <div>
              
             <p>Using Chart.js in React</p>
-            <Line data={data} />
-            <LineChart chartData={chartData} />
+            {data && <Line data={data} />}
+
         </div>
       );
     

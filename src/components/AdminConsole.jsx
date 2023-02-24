@@ -17,13 +17,12 @@ const AdminConsole = () => {
 
    
     useEffect(() => {
-        axios.get('http://localhost:5000/protected', {
+        axios.get('http://localhost:5000/getUserById', {
             headers: {
                 Authorization: userToken
             }
         })
             .then(response => {
-                console.log("response",response.data);
                 dispatch(loadUserData(response.data));
             })
             .catch(error => {

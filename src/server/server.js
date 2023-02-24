@@ -49,14 +49,13 @@ const getAllU =  async () =>{
     return result;  
 }
 
-const getSingleU =  async (user, pass) =>{   
-    let result = await db.getSingleUser(user, pass);   
-    return result;  
+const getFinances = async () =>{
+  let result = await db.getFinances();
+  return result;
 }
 
 
-
-  app.get('/protected', authMiddleware, async function (req, res) {
+  app.get('/getUserById', authMiddleware, async function (req, res) {
 
     User.findByPk(req.user.userid)
     .then(user => {
@@ -68,9 +67,12 @@ const getSingleU =  async (user, pass) =>{
       console.error(err);
       res.status(500).json({ error: 'Internal server error' });
     });
-      // res.send(`Hello, ${req.user.id}!`); 
   });
   
+  app.get('/finances', authMiddleware, async function (req, res) {
+    let recordset = await getFinances();
+    res.send(recordset);  
+  });
   
 
 app.get('/getall', async function (req, res) {
@@ -90,18 +92,15 @@ app.get('/getuser/:email', async function (req, res) {
 app.post('/autorizeUser', async function (req, res) {
     const {email, pwd} = req.body;
 
-    try {
-      console.log("trying user:");
+    try {   
       const user =await User.findOne({  attributes: ['id', 'firstname', 'password'],
       where: { email: email } })
-        .then(user => { 
-          console.log("user: ", user);     
+        .then(user => {      
           return user;
         })
         .catch(err => {
           console.error(err);
-      })
-   
+      })  
         if (!user || pwd !== user.password) {
           return res.status(401).json({ error: 'Invalid email or password' });
         }
