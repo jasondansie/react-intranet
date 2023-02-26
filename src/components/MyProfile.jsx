@@ -1,15 +1,16 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import classes from './MyProfile.module.css'
+import PageHeading from './PageHeading';
 
 const MyProfile = () => {
     const userData = useSelector((state) => state.user.userData);
 
     return (
         <div className={classes.MyProfile}>
-            <div className={classes.pageHeading}>
-                <h2>Profile</h2>
-            </div>
+            <PageHeading
+                title="Profile"
+            />
             <div className={classes.userProfile}>
                 <div className={classes.userHeading}>
                     <h2>User profile</h2>
@@ -26,7 +27,7 @@ const MyProfile = () => {
                             <li><i class="fa fa-phone"></i> :  phoneNumber</li>
                         </ul>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
