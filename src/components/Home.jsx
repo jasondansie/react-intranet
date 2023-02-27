@@ -3,16 +3,19 @@ import { useState } from "react";
 import { Line } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import classes from './Home.module.css'
 import PageHeading from './PageHeading';
+import BasicTable from './BasicTable';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
 
 const Home = () => {
+  const dispatch = useDispatch();
   const userToken = useSelector((state) => state.user.userToken);
 
   const [data, setData] = useState(null);
+  const [users, setUsers] = useState(null);
 
   useEffect(() => {
     axios.get('http://localhost:5000/finances', {
@@ -50,7 +53,20 @@ const Home = () => {
       .catch(error => {
         console.error(error);
       });
-  }, [userToken]);
+
+    axios.get('http://localhost:5000/getAllUsers', {
+      headers: {
+        Authorization: userToken
+      }
+    })
+      .then(response => {
+        setUsers(response.data);
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, [userToken, dispatch]);
 
   // const [chartData, setChartData] = useState({
   //     labels: Data.map((data) => data.year), 
@@ -79,6 +95,9 @@ const Home = () => {
       />
       <div className={classes.top}>
         <div className={classes.maincontent}>
+          <BasicTable
+            title="Current Users"
+          />
           <div className={classes.chart}>
             {data && <Line data={data} />}
           </div>

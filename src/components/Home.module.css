@@ -10,7 +10,9 @@
 .maincontent {
     margin-top: 25px;
     width: 90%;
-    background-color: white;
+
 }
 
-.chart {}
+.chart {
+    background-color: white;
+}

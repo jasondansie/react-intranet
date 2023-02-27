@@ -1,0 +1,33 @@
+.tabletop {
+    margin-bottom: 2rem;
+    background-color: white;
+}
+
+table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+    border-collapse: collapse;
+    box-sizing: border-box;
+}
+
+thead,
+tr {
+    margin: 0;
+    padding: 0;
+    outline: none !important;
+}
+
+thead,
+th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+    padding: .75rem;
+}
+
+th {
+    padding: .75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}

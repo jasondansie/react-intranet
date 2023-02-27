@@ -75,19 +75,17 @@ const getFinances = async () =>{
   });
   
 
-app.get('/getall', async function (req, res) {
-    // let recordset = await getAllU();
-    // res.send(recordset);  
-    console.log("header", req.headers.authorization);   
-    
+app.get('/getAllUsers', async function (req, res) {
+  User.findAll()
+  .then(users => {
+    res.send(users);
+  })
+  .catch(error => {
+    console.error(error);
+  });
 
 });
 
-app.get('/getuser/:email', async function (req, res) {
-    let login = req.params.email.split("&");
-    let recordset = await getSingleU(login[0], login[1]);
-    res.send(recordset);     
-});
 
 app.post('/autorizeUser', async function (req, res) {
     const {email, pwd} = req.body;
