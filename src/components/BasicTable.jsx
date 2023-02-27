@@ -1,7 +1,10 @@
 import React from 'react';
 import classes from './BasicTable.module.css'
 
-const BasicTable = ({ title }) => {
+const BasicTable = ({ title, users }) => {
+
+    const [columns, userData] = users;
+
     return (
         <div className={classes.tabletop}>
             <div className={classes.heading}>
@@ -9,29 +12,29 @@ const BasicTable = ({ title }) => {
             </div>
             <div className={classes.basictable}>
                 <table>
-                    <thead>
+                    <thead>                          
                         <tr>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Position</th>
-                        </tr>
+                            <th>{columns[0]}</th>
+                            <th>{columns[1]}</th>
+                            <th>{columns[2]}</th>
+                            <th>{columns[7]}</th>
+                            <th>{columns[3]}</th>
+                            <th>{columns[9]}</th>
+                        </tr>                         
                     </thead>
-                    <tbody>
-                        <tr>
-                            <th>Jason</th>
-                            <th>Dansie</th>
-                            <th>Owner/IT Guy</th>
-                        </tr>
-                        <tr>
-                            <th>Stina</th>
-                            <th>Dansie</th>
-                            <th>Owner/CEO</th>
-                        </tr>
-                        <tr>
-                            <th>Sakke</th>
-                            <th>Turunen</th>
-                            <th>Outsource Partner</th>
-                        </tr>
+                    <tbody>                                           
+                        {userData.map((user, index) => {                     
+                            return (
+                                <tr key={index}>  
+                                    <th key={user.id}>{user.id}</th>
+                                    <th>{user.firstName}</th>
+                                    <th>{user.lastName}</th>
+                                    <th>{user.accessId}</th>
+                                    <th>{user.email}</th>
+                                    <th>{user.position}</th>
+                                </tr>                                      
+                            )                     
+                        })}                  
                     </tbody>
                 </table>
             </div>

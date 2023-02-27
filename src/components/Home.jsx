@@ -54,14 +54,13 @@ const Home = () => {
         console.error(error);
       });
 
-    axios.get('http://localhost:5000/getAllUsers', {
+    axios.get('http://localhost:5000/users', {
       headers: {
         Authorization: userToken
       }
     })
       .then(response => {
         setUsers(response.data);
-        console.log(response.data);
       })
       .catch(error => {
         console.error(error);
@@ -95,9 +94,10 @@ const Home = () => {
       />
       <div className={classes.top}>
         <div className={classes.maincontent}>
-          <BasicTable
+          {users && <BasicTable
             title="Current Users"
-          />
+            users={users}
+          />}
           <div className={classes.chart}>
             {data && <Line data={data} />}
           </div>

@@ -43,12 +43,6 @@ const addUser1 = (firstname, lastname, email, password, photofilename,  createdb
   console.log(user.toJSON()); // print the inserted user object
 })();
 
-
-const getAllU =  async () =>{
-    let result = await db.getAllUsers();
-    return result;  
-}
-
 const getFinances = async () =>{
   let result = await db.getFinances();
   return result;
@@ -60,7 +54,6 @@ const getFinances = async () =>{
     User.findByPk(req.user.userid)
     .then(user => {
       // Return the user data as a JSON response to the client
-      console.log("fetched: ", user);
       res.json(user);
     })
     .catch(err => {
@@ -75,10 +68,16 @@ const getFinances = async () =>{
   });
   
 
-app.get('/getAllUsers', async function (req, res) {
+app.get('/users', async function (req, res) {
   User.findAll()
   .then(users => {
-    res.send(users);
+    const columns = Object.keys(users[0].dataValues);
+    let dataset = [];
+
+    dataset.push(columns);
+    dataset.push(users);
+
+    res.send(dataset);
   })
   .catch(error => {
     console.error(error);
