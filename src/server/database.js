@@ -11,10 +11,10 @@ const getAllUsers = async () => {
     connection.end();
 }
 
-const getFinances = async () => {
+const getSingleUser = async (user, pass) => {
   const connection = await mariadb.createConnection(config.db);
 
-    let result = await connection.query('select * from finance');
+  let result = await connection.query('SELECT * from users WHERE email = ? AND password = ?' ,[ user, pass]);
 
     delete result.meta;
 
@@ -23,5 +23,5 @@ const getFinances = async () => {
 }
 
 module.exports = {
-  getAllUsers, getFinances
+  getAllUsers, getSingleUser
 }
