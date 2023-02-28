@@ -8,11 +8,15 @@
     color: white;
 }
 
-.user img{
-    width: 30%;
-    height: 80%;
-    border-radius: 55%;   
+
+.roundImage{
+    display: block;
+    width: 100%;
+    max-width: 90px; 
+    height: 90px;
+    border-radius: 50%; 
 }
+
 
 .user h4{
     margin:0 1rem 0;

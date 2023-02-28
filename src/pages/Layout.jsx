@@ -6,11 +6,7 @@ import Login2 from '../components/Login2';
 
 
 const Layout = () => {
-    const userD = useSelector((state) => state.user.userInfo);
     const authenticated = useSelector((state) => state.user.isAuthenticated);
-
-    console.log("auth:", authenticated);
-    console.log("user2: ", userD);
 
     return (
         <div>

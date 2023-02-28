@@ -1,0 +1,13 @@
+.pageHeading {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    height: 10vh;
+    font-size: 15px;
+    font-weight: 400;
+    color: #15283c;
+}
+
+.pageHeading h2 {
+    margin-left: 5vh;
+}

@@ -5,6 +5,7 @@ const config = {
       user: "gctestman",
       password: "C4rPnxT82r",
       database: "gctest",
+      dialect: "mysql",
     },
     listPerPage: 10,
   };

@@ -1,68 +1,129 @@
-require('dotenv').config();
-
-var express = require('express');
-var app = express();
-
-const cors = require('cors');
+const express = require('express');
+const app = express();
 const db = require('./database');
+const cors = require('cors');
 const jwt = require('jsonwebtoken');
+const config = require('./config');
 
 
+require('dotenv').config(); 
+
+const { Sequelize } = require('sequelize');
+const authMiddleware = require('./authMiddleware');
+
+
+const sequelize = new Sequelize(config.db.database, config.db.user, config.db.password, {
+  dialect: 'mysql',
+  host: config.db.host
+});
+
+const User = require('./models/User')(sequelize);
 
 app.use(cors());
 app.use(express.json());
 
 
-const getAllU =  async () =>{
-    let result = await db.getAllUsers();
-    return result;  
-}
-const getSingleU =  async (user, pass) =>{   
-    let result = await db.getSingleUser(user, pass);   
-    return result;  
+const addUser1 = (firstname, lastname, email, password, photofilename,  createdby = "1", accessid = "2", enabled = "1", position = "none", company = "Good Call", resetpassword = true) => (async () => {
+  await sequelize.sync(); // sync the model with the database
+  const user = await User.create({
+    firstname:{firstname},
+    lastname: {lastname},
+    email: {email},
+    password: {password},
+    createdby: {createdby},
+    accessid: {accessid},
+    enabled: {enabled},
+    photofilename:{photofilename},
+    position: {position},
+    company: {company},
+    resetpassword: {resetpassword},
+    
+  });
+})();
+
+const getFinances = async () =>{
+  let result = await db.getFinances();
+  return result;
 }
 
-app.get('/getall', async function (req, res) {
-    let recordset = await getAllU();
-    res.send(recordset);     
+
+  app.get('/getUserById', authMiddleware, async function (req, res) {
+
+    User.findByPk(req.user.userid)
+    .then(user => {
+      // Return the user data as a JSON response to the client
+      res.json(user);
+    })
+    .catch(err => {
+      res.status(500).json({ error: 'Internal server error' });
+    });
+  });
+  
+  app.get('/finances', authMiddleware, async function (req, res) {
+    let recordset = await getFinances();
+    res.send(recordset);  
+  });
+  
+
+app.get('/users', async function (req, res) {
+  User.findAll()
+  .then(users => {
+    const columns = Object.keys(users[0].dataValues);
+    let dataset = [];
+
+    dataset.push(columns);
+    dataset.push(users);
+
+    res.send(dataset);
+  })
+  .catch(error => {
+    res.status(404).json({ error: 'Info not found' });
+  });
+
 });
 
-app.get('/getuser/:email', async function (req, res) {
-    let login = req.params.email.split("&");
-    let recordset = await getSingleU(login[0], login[1]);
-    res.send(recordset);     
-});
 
-app.post('/getSingleUser', async function (req, res) {  
-    const { email, password } = req.body;
+app.post('/autorizeUser', async function (req, res) {
+    const {email, pwd} = req.body;
 
-    try {
-        let foundUser = await db.findUserName(email);
-        const jwtSecret = process.env.JWT_SECRET;
-        console.log("foundUser",foundUser);
-        console.log("env",jwtSecret);  
-      
-      if (foundUser.length === 0) return res.status(400).json({ msg: 'Invalid Credentials' });
-  
-      let user = await getSingleU(email, password);
-      
-      if (user.length === 0) return res.status(400).json({ msg: 'Invalid Credentials' });
-  
-      const payload = { user: { id: user.id } };
-      jwt.sign(
-        payload,
-        process.env.REACT_APP_JWT_SECRET,
-        { expiresIn: 3600 },
-        (err, token) => {
-          if (err) throw err;
-          res.json({ token });
+    try {   
+      const user =await User.findOne({  attributes: ['id', 'firstname', 'password'],
+      where: { email: email } })
+        .then(user => {      
+          return user;
+        })
+        .catch(err => {
+          res.status(404).json({ error: 'Info not found' });
+      })  
+        if (!user || pwd !== user.password) {
+          return res.status(401).json({ error: 'Invalid email or password' });
         }
-      );
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server Error');
-    }  
-})
+
+        const payload = { 
+          user: { 
+            userid: user.id,
+            firstname: user.firstname 
+          } 
+        };
+
+        jwt.sign(
+          payload,
+          process.env.REACT_APP_TOKEN_KEY,
+          { expiresIn: 3600 },
+          (err, token) => {
+            if (err) throw err;
+            res.json({ token });
+
+          }
+        );
+      } catch (err) {
+        res.status(500).send('Server Error');
+      }    
+});
+
+// addUser("Jason", "Dansie", "jasondansie@gmail.com", 'Passwd123', "Jason.jpg");
+// addUser("Stina", "Dansie", "stina@goodcall.fi", "Passwd123", "Stina.jpg");
+// addUser("Sakke", "Turunen", "Sakke@goodcall.fi", "Passwd123", "Sakke.jpg");
 
 app.listen(5000, function () {
     console.log('Server is running on port 5000..');
