@@ -23,7 +23,7 @@ const MyProfile = () => {
                         <h3>{userData.firstName} {userData.lastName}</h3>
                         <p> <strong>About:</strong> {userData.position}</p>
                         <ul>
-                            <li><i className={classes.info} className="fa fa-envelope-o"></i> :  {userData.email}</li>
+                            <li><i className={classes.info} class="fa fa-envelope-o"></i> :  {userData.email}</li>
                             <li><i className="fa fa-phone"></i> :  phoneNumber</li>
                         </ul>
                     </div>
