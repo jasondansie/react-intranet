@@ -39,8 +39,6 @@ const addUser1 = (firstname, lastname, email, password, photofilename,  createdb
     resetpassword: {resetpassword},
     
   });
-  
-  console.log(user.toJSON()); // print the inserted user object
 })();
 
 const getFinances = async () =>{
@@ -57,7 +55,6 @@ const getFinances = async () =>{
       res.json(user);
     })
     .catch(err => {
-      console.error(err);
       res.status(500).json({ error: 'Internal server error' });
     });
   });
@@ -80,7 +77,7 @@ app.get('/users', async function (req, res) {
     res.send(dataset);
   })
   .catch(error => {
-    console.error(error);
+    res.status(404).json({ error: 'Info not found' });
   });
 
 });
@@ -96,7 +93,7 @@ app.post('/autorizeUser', async function (req, res) {
           return user;
         })
         .catch(err => {
-          console.error(err);
+          res.status(404).json({ error: 'Info not found' });
       })  
         if (!user || pwd !== user.password) {
           return res.status(401).json({ error: 'Invalid email or password' });
@@ -120,7 +117,6 @@ app.post('/autorizeUser', async function (req, res) {
           }
         );
       } catch (err) {
-        console.error(err.message);
         res.status(500).send('Server Error');
       }    
 });

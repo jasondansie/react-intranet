@@ -46,12 +46,6 @@
     overflow: hidden;
 }
 
-.dropDownNav img{
-    width: 20%;
-    height: 60%;
-    border-radius: 55%;
-    
-}
 
 .adminNav select{
     height: 40%;
@@ -59,4 +53,12 @@
     box-shadow: none;
     border: none;
     color: white;
+}
+
+.roundImage{
+    display: block;
+    width: 100%;
+    max-width: 60px; 
+    height: 60px;
+    border-radius: 50%; 
 }
