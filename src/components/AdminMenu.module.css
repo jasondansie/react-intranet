@@ -27,13 +27,17 @@
 }
 
 .mainNav{
+    display: flex;
+    align-items: center;
     width: 75%;
 }
 
 .mainNav img {
-    width: 10%;
-    height: 10%;
-    margin: 0.5rem;
+    width: 100%;
+    max-width: 60px; 
+    height: 40px;
+    margin: 0 0 0 20px;
+   
 }
 
 .dropDownNav{

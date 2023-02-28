@@ -43,25 +43,25 @@
     display: flex;
     width: 40%;
     justify-content: center;
+    align-items: center;
 }
 
 .roundImage{
     display: block;
     width: 100%;
-    max-width: 300px; 
-    height: auto;
+    max-width: 200px; 
+    height: 200px;
     border-radius: 50%; 
 }
 
-.profileContent img {
-    vertical-align: middle;
-    border-style: none;
-    width: 15vw;
-    height: 20vh ;
-    margin: 5vh 0 0;
-  }
+.profileInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+}
 
-  .profileInfo ul, li, i{
+  .profileInfo ul, li, i, p, h3{
     margin: 10px 0 0;
     padding: 0;
     color: #898989;

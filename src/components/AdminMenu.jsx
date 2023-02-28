@@ -24,10 +24,7 @@ const AdminMenu = ({image, name}) => {
             </div>  
             <div className={classes.mainNav}>
                 <div className={classes.logo}>
-                    <div className='companyLogo'>
-                        <img src="https://www.goodcall.fi/wp-content/uploads/2021/05/logo2.png" alt="" className={classes.
-                    roundImage} />
-                    </div>
+                    <img src="https://www.goodcall.fi/wp-content/uploads/2021/05/logo2.png" alt=""/>
                 </div>
             </div>  
             <div className={classes.dropDownNav}>
