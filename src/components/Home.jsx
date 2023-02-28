@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { useState } from "react";
+import React from 'react';
+import { useState, useEffect } from "react";
 import { Line } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js';
 import axios from 'axios';
@@ -28,7 +28,7 @@ const Home = () => {
         const profit = response.data.map(item => item.profit);
         const revenue = response.data.map(item => item.revenue);
 
-        const data = {
+        const chartdata = {
           labels: month,
           datasets: [
             {
@@ -48,7 +48,7 @@ const Home = () => {
           ]
         };
 
-        setData(data);
+        setData(chartdata);
       })
       .catch(error => {
         console.error(error);
@@ -90,7 +90,7 @@ const Home = () => {
   return (
     <div>
       <PageHeading
-        title="DashBoard"
+        pageTitle="DashBoard"
       />
       <div className={classes.top}>
         <div className={classes.maincontent}>

@@ -23,23 +23,23 @@ app.use(cors());
 app.use(express.json());
 
 
-const addUser1 = (firstname, lastname, email, password, photofilename,  createdby = "1", accessid = "2", enabled = "1", position = "none", company = "Good Call", resetpassword = true) => (async () => {
-  await sequelize.sync(); // sync the model with the database
-  const user = await User.create({
-    firstname:{firstname},
-    lastname: {lastname},
-    email: {email},
-    password: {password},
-    createdby: {createdby},
-    accessid: {accessid},
-    enabled: {enabled},
-    photofilename:{photofilename},
-    position: {position},
-    company: {company},
-    resetpassword: {resetpassword},
+// const addUser1 = (firstname, lastname, email, password, photofilename,  createdby = "1", accessid = "2", enabled = "1", position = "none", company = "Good Call", resetpassword = true) => (async () => {
+//   await sequelize.sync(); // sync the model with the database
+//   const user = await User.create({
+//     firstname:{firstname},
+//     lastname: {lastname},
+//     email: {email},
+//     password: {password},
+//     createdby: {createdby},
+//     accessid: {accessid},
+//     enabled: {enabled},
+//     photofilename:{photofilename},
+//     position: {position},
+//     company: {company},
+//     resetpassword: {resetpassword},
     
-  });
-})();
+//   });
+// })();
 
 const getFinances = async () =>{
   let result = await db.getFinances();
@@ -47,7 +47,7 @@ const getFinances = async () =>{
 }
 
 
-  app.get('/getUserById', authMiddleware, async function (req, res) {
+  app.get('/getUserById', authMiddleware, function (req, res) {
 
     User.findByPk(req.user.userid)
     .then(user => {
@@ -65,7 +65,7 @@ const getFinances = async () =>{
   });
   
 
-app.get('/users', async function (req, res) {
+app.get('/users', function (req, res) {
   User.findAll()
   .then(users => {
     const columns = Object.keys(users[0].dataValues);
@@ -87,22 +87,22 @@ app.post('/autorizeUser', async function (req, res) {
     const {email, pwd} = req.body;
 
     try {   
-      const user =await User.findOne({  attributes: ['id', 'firstname', 'password'],
+      const userData = await User.findOne({  attributes: ['id', 'firstname', 'password'],
       where: { email: email } })
-        .then(user => {      
-          return user;
+        .then(userData => {      
+          return userData;
         })
         .catch(err => {
           res.status(404).json({ error: 'Info not found' });
       })  
-        if (!user || pwd !== user.password) {
+        if (!userData || pwd !== userData.password) {
           return res.status(401).json({ error: 'Invalid email or password' });
         }
 
         const payload = { 
           user: { 
-            userid: user.id,
-            firstname: user.firstname 
+            userid: userData.id,
+            firstname: userData.firstname 
           } 
         };
 
