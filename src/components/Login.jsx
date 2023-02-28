@@ -1,3 +1,4 @@
+import React from 'react';
 import classes from './Login.module.css'
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -31,7 +32,7 @@ const Login = () => {
         dispatch(isAuthenticated(true));
     }
 
-    if (loading) return (<ShowSpinner />)
+    
 
     return (
         <div className={classes.login}>
@@ -41,7 +42,9 @@ const Login = () => {
                     <div className='companyLogo'>
                         <img src="https://www.goodcall.fi/wp-content/uploads/2021/05/logo2.png" alt="" />
                     </div>
-
+                </div>
+                <div className={classes.showSpinner}>
+                   {loading && <ShowSpinner />}
                 </div>
                 <div className={classes.loginMain}>
                     <form action="">

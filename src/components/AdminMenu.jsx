@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import classes from './AdminMenu.module.css'
 
-const AdminMenu = ({image, name}) => {
+const AdminMenu = ({image, userName}) => {
     const navigation = useNavigate();
     let imageUrl = `./images/${image}`;
 
@@ -28,9 +28,9 @@ const AdminMenu = ({image, name}) => {
                 </div>
             </div>  
             <div className={classes.dropDownNav}>
-                <img src={imageUrl} alt={name} className={classes.roundImage} />
+                <img src={imageUrl} alt={userName} className={classes.roundImage} />
                 <select name="selection" id="selection" onChange={(e) => changeHandler(e)}>
-                    <option value={name} hidden>{name}</option>
+                    <option value={userName} hidden>{userName}</option>
                     <option value="myprofile">My Profile</option>
                     <option value="Info">Info</option>
                     <option value="Logout">Logout</option>                  

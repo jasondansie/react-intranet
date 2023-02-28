@@ -30,14 +30,16 @@ img {
     border-radius: 15px 15px 0 0;
 }
 
+.login .showSpinner{
+    height: 10px;
+}
+
 .login .loginMain {
     display: flex;
     justify-content: center;
     margin-top: 3rem;
     height: 20rem;
 }
-
-
 
 .formInput {
     border-top: none;

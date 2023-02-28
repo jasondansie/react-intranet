@@ -43,7 +43,7 @@ const AdminConsole = () => {
 
                 <div className={classes.topmenu}>
                     <AdminMenu
-                        name={`${userData.firstName} ${userData.lastName}` }
+                        userName={`${userData.firstName} ${userData.lastName}` }
                         image={userData.photoFilename}
                     />
                 </div>
