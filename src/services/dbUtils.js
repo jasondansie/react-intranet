@@ -7,4 +7,4 @@ const getSingleUser = async (endpoint) => {
     return response.data;
 }
 
-export default { getSingleUser };
+export default getSingleUser();
