@@ -16,7 +16,7 @@ const SideMenu = ({image, name}) => {
                         <MenuItem
                             name="DashBoard"
                             icon="fa fa-clock-o"
-                            hrefLink="/home"
+                            link="/home"
                          />
                     </li>
                     
