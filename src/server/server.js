@@ -4,6 +4,7 @@ const db = require('./database');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const config = require('./config');
+const serverless = require('serverless-http');
 
 
 require('dotenv').config(); 
@@ -128,3 +129,5 @@ app.post('/autorizeUser', async function (req, res) {
 app.listen(5000, function () {
     console.log('Server is running on port 5000..');
 });
+
+module.exports.handler = serverless(app);
