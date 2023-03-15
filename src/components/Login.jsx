@@ -32,7 +32,7 @@ const Login = () => {
         dispatch(isAuthenticated(true));
     }
 
-    
+
 
     return (
         <div className={classes.login}>
@@ -44,7 +44,7 @@ const Login = () => {
                     </div>
                 </div>
                 <div className={classes.showSpinner}>
-                   {loading && <ShowSpinner />}
+                    {loading && <ShowSpinner />}
                 </div>
                 <div className={classes.loginMain}>
                     <form action="">

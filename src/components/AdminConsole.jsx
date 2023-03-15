@@ -15,7 +15,9 @@ const AdminConsole = () => {
     const userData = useSelector((state) => state.user.userData);
     const userToken = useSelector((state) => state.user.userToken);
 
-   
+    console.log("userToken", userToken);
+
+
     useEffect(() => {
         axios.get('http://localhost:5000/getUserById', {
             headers: {
@@ -24,15 +26,16 @@ const AdminConsole = () => {
         })
             .then(response => {
                 dispatch(loadUserData(response.data));
+                console.log("getsingleuser", response.data);
             })
             .catch(error => {
-                console.error(error);
+                console.log(error);
             });
     }, [dispatch, userToken]);
-    
-   
+
+
     return (
-        <div className={classes.adminconsole}>                 
+        <div className={classes.adminconsole}>
             <aside className={classes.sidemenu}>
                 <Sidemenu
                     name={`${userData.firstName} ${userData.lastName}`}
@@ -43,7 +46,7 @@ const AdminConsole = () => {
 
                 <div className={classes.topmenu}>
                     <AdminMenu
-                        userName={`${userData.firstName} ${userData.lastName}` }
+                        userName={`${userData.firstName} ${userData.lastName}`}
                         image={userData.photoFilename}
                     />
                 </div>
@@ -53,7 +56,7 @@ const AdminConsole = () => {
             </div>
         </div>
     );
-    
+
 };
 
 export default AdminConsole;

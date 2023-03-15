@@ -12,6 +12,7 @@ const { Sequelize } = require('sequelize');
 const authMiddleware = require('./authMiddleware');
 
 
+
 const sequelize = new Sequelize(config.db.database, config.db.user, config.db.password, {
   dialect: 'mysql',
   host: config.db.host
@@ -48,13 +49,16 @@ const getFinances = async () =>{
 
 
   app.get('/getUserById', authMiddleware, function (req, res) {
-
+    console.log("in get userbyid");
+    console.log("userid",req.user.userid);
     User.findByPk(req.user.userid)
     .then(user => {
       // Return the user data as a JSON response to the client
+      console.log("user u",user);
       res.json(user);
     })
     .catch(err => {
+      console.log("error in getting single user",err);
       res.status(500).json({ error: 'Internal server error' });
     });
   });
@@ -66,8 +70,10 @@ const getFinances = async () =>{
   
 
 app.get('/users', function (req, res) {
+  console.log("in get users");
   User.findAll()
   .then(users => {
+    console.log("users", users);
     const columns = Object.keys(users[0].dataValues);
     let dataset = [];
 
@@ -85,11 +91,12 @@ app.get('/users', function (req, res) {
 
 app.post('/autorizeUser', async function (req, res) {
     const {email, pwd} = req.body;
-
+    
     try {   
       const userData = await User.findOne({  attributes: ['id', 'firstname', 'password'],
       where: { email: email } })
-        .then(userData => {      
+        .then(userData => {    
+          console.log("data", userData); 
           return userData;
         })
         .catch(err => {

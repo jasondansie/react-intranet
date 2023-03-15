@@ -61,6 +61,7 @@ const Home = () => {
     })
       .then(response => {
         setUsers(response.data);
+        console.log("home:", response, data);
       })
       .catch(error => {
         console.error(error);
