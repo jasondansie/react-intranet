@@ -2,7 +2,6 @@ const express = require('express');
 const app = express();
 const db = require('./database');
 const cors = require('cors');
-// const jwt = require('jsonwebtoken');
 const config = require('./config');
 const serverless = require('serverless-http');
 
@@ -11,6 +10,7 @@ require('dotenv').config();
 
 const { Sequelize } = require('sequelize');
 const authMiddleware = require('./authMiddleware');
+const { default: createToken } = require('./tokenMiddleWare');
 
 
 const sequelize = new Sequelize(config.db.database, config.db.user, config.db.password, {
@@ -106,17 +106,9 @@ app.post('/autorizeUser', async function (req, res) {
             firstname: userData.firstname 
           } 
         };
+        const token = createToken(payload);
+        res.json({ token });
 
-        // jwt.sign(
-        //   payload,
-        //   process.env.REACT_APP_TOKEN_KEY,
-        //   { expiresIn: 3600 },
-        //   (err, token) => {
-        //     if (err) throw err;
-        //     res.json({ token });
-
-        //   }
-        // );
       } catch (err) {
         res.status(500).send('Server Error');
       }    
