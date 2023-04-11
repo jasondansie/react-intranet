@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const db = require('./database');
 const cors = require('cors');
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 const config = require('./config');
 const serverless = require('serverless-http');
 
@@ -49,14 +49,14 @@ const getFinances = async () =>{
 
 
   app.get('/getUserById', authMiddleware, function (req, res) {
-
+    console.log(req.user.userid);
     User.findByPk(req.user.userid)
     .then(user => {
       // Return the user data as a JSON response to the client
       res.json(user);
     })
     .catch(err => {
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(408).json({ error: err });
     });
   });
   
@@ -107,16 +107,16 @@ app.post('/autorizeUser', async function (req, res) {
           } 
         };
 
-        jwt.sign(
-          payload,
-          process.env.REACT_APP_TOKEN_KEY,
-          { expiresIn: 3600 },
-          (err, token) => {
-            if (err) throw err;
-            res.json({ token });
+        // jwt.sign(
+        //   payload,
+        //   process.env.REACT_APP_TOKEN_KEY,
+        //   { expiresIn: 3600 },
+        //   (err, token) => {
+        //     if (err) throw err;
+        //     res.json({ token });
 
-          }
-        );
+        //   }
+        // );
       } catch (err) {
         res.status(500).send('Server Error');
       }    

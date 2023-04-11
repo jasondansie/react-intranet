@@ -1,6 +1,7 @@
 {
   "name": "react-intranet",
   "version": "0.1.0",
+  "homepage": "http://extranet.goodcall.fi/",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.2",

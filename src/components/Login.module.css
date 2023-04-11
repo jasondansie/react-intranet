@@ -9,8 +9,8 @@
 .login .container {
     display: flex;
     flex-direction: column;
-    min-height: 80vh;
-    min-width: 45vw;
+    min-height: 20vh;
+    min-width: 15vw;
     box-shadow: 0 0 10px -8px black;
     border-radius: 15px;
     background-color: white;

@@ -24,6 +24,7 @@ const AdminConsole = () => {
         })
             .then(response => {
                 dispatch(loadUserData(response.data));
+                console.log(response.data);
             })
             .catch(error => {
                 console.error(error);
