@@ -48,7 +48,9 @@ const getFinances = async () =>{
 
 
   app.get('/getUserById', authMiddleware, function (req, res) {
-    console.log("req",req);
+
+    // console.log("body", req.body);
+    // console.log("req",req);
     User.findByPk(req.user.userid)
     .then(user => {
       // Return the user data as a JSON response to the client

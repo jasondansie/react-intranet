@@ -20,10 +20,9 @@ const AdminConsole = () => {
    
     useEffect(() => {
         if (!userToken) {
-            console.log('User token is not set');
+            console.log('User token is not set');     
             return;
           }
-          
         axios.get('http://localhost:5000/getUserById', {
             headers: {
                 Authorization: userToken
