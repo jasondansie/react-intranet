@@ -3,14 +3,13 @@ const app = express();
 const db = require('./database');
 const cors = require('cors');
 const config = require('./config');
-const serverless = require('serverless-http');
 
 
 require('dotenv').config(); 
 
 const { Sequelize } = require('sequelize');
 const authMiddleware = require('./authMiddleware');
-const { default: createToken } = require('./tokenMiddleWare');
+const createToken = require('./tokenMiddleWare');
 
 
 const sequelize = new Sequelize(config.db.database, config.db.user, config.db.password, {
@@ -49,7 +48,7 @@ const getFinances = async () =>{
 
 
   app.get('/getUserById', authMiddleware, function (req, res) {
-    console.log(req.user.userid);
+    console.log("req",req);
     User.findByPk(req.user.userid)
     .then(user => {
       // Return the user data as a JSON response to the client
@@ -88,9 +87,10 @@ app.post('/autorizeUser', async function (req, res) {
     const {email, pwd} = req.body;
 
     try {   
-      const userData = await User.findOne({  attributes: ['id', 'firstname', 'password'],
+      const userData = await User.findOne({  attributes: ['id', 'firstname', 'password', 'email'],
       where: { email: email } })
-        .then(userData => {      
+        .then(userData => {   
+          // console.log("userdata", userData);   
           return userData;
         })
         .catch(err => {
@@ -99,15 +99,20 @@ app.post('/autorizeUser', async function (req, res) {
         if (!userData || pwd !== userData.password) {
           return res.status(401).json({ error: 'Invalid email or password' });
         }
-
+        
         const payload = { 
           user: { 
             userid: userData.id,
-            firstname: userData.firstname 
+            firstname: userData.firstname,
+            email: userData.email,
+            password: userData.password
           } 
         };
-        const token = createToken(payload);
-        res.json({ token });
+        console.log("payload: ", payload);
+        const token = await createToken({payload});
+
+        console.log("token: ", token);
+        res.json(token);
 
       } catch (err) {
         res.status(500).send('Server Error');
@@ -121,5 +126,3 @@ app.post('/autorizeUser', async function (req, res) {
 app.listen(5000, function () {
     console.log('Server is running on port 5000..');
 });
-
-module.exports.handler = serverless(app);

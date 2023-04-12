@@ -27,7 +27,7 @@ const BasicTable = ({ title, users }) => {
                             return (
                                 <tr key={index}>  
                                     <th key={user.id}>{user.id}</th>
-                                    <th>{user.firstName}</th>
+                                    <th>{user.firstname}</th>
                                     <th>{user.lastName}</th>
                                     <th>{user.accessId}</th>
                                     <th>{user.email}</th>

@@ -1,8 +1,12 @@
 const jwt = require('jsonwebtoken');
-
 const authMiddleware = (req, res, next) => {
+  console.log("middAuthorizationleToken", req.header('Authorization'));
+  
   // check if there is a token in the request header
+  const authHeader = req.header('Authorization') || req.header('authorization');
   const token = req.header('Authorization');
+
+  console.log("middleToken", token);
 
   if (!token) {
     return res.status(403).json({ message: 'Authorization denied' });
@@ -11,7 +15,7 @@ const authMiddleware = (req, res, next) => {
   try {
     // verify the token and attach the user data to the request object
     const decoded = jwt.verify(token, process.env.REACT_APP_TOKEN_KEY);
-    // const decoded = jwt.decode(token);
+    console.log("decoded",decoded);
     req.user = decoded.user;
     next();
   } catch (err) {
@@ -20,4 +24,3 @@ const authMiddleware = (req, res, next) => {
 };
 
 module.exports = authMiddleware;
-

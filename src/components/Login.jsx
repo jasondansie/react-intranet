@@ -3,13 +3,14 @@ import classes from './Login.module.css'
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../actions/authActions';
-import { isLoading, isAuthenticated } from './features/UserSlice.js';
+import { isLoading } from './features/UserSlice.js';
 
 
 const Login = () => {
     const dispatch = useDispatch();
 
-    const loading = useSelector((state) => state.user.isLoading)
+    const loading = useSelector((state) => state.user.isLoading);
+    const Authenticated = useSelector((state) => state.user.isAuthenticated);
 
     const [email, setEmail] = useState("");
     const [pwd, setPwd] = useState("");
@@ -29,10 +30,7 @@ const Login = () => {
         dispatch(isLoading(true));
         await dispatch(login({ email, pwd }));
         dispatch(isLoading(false));
-        dispatch(isAuthenticated(true));
     }
-
-    
 
     return (
         <div className={classes.login}>
