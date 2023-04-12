@@ -14,15 +14,8 @@ const AdminConsole = () => {
 
     const userData = useSelector((state) => state.user.userData);
     const userToken = useSelector((state) => state.user.userToken);
-
-    console.log("userData", userData);
-    console.log("userToken", userToken);
    
     useEffect(() => {
-        if (!userToken) {
-            console.log('User token is not set');     
-            return;
-          }
         axios.get('http://localhost:5000/getUserById', {
             headers: {
                 Authorization: userToken
@@ -36,7 +29,6 @@ const AdminConsole = () => {
                 console.error(error);
             });
     }, [dispatch, userToken]);
-    
    
     return (
         <div className={classes.adminconsole}>                 
