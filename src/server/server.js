@@ -48,9 +48,6 @@ const getFinances = async () =>{
 
 
   app.get('/getUserById', authMiddleware, function (req, res) {
-
-    // console.log("body", req.body);
-    // console.log("req",req);
     User.findByPk(req.user.userid)
     .then(user => {
       // Return the user data as a JSON response to the client
@@ -91,8 +88,7 @@ app.post('/autorizeUser', async function (req, res) {
     try {   
       const userData = await User.findOne({  attributes: ['id', 'firstname', 'password', 'email'],
       where: { email: email } })
-        .then(userData => {   
-          // console.log("userdata", userData);   
+        .then(userData => {      
           return userData;
         })
         .catch(err => {
@@ -109,13 +105,9 @@ app.post('/autorizeUser', async function (req, res) {
             email: userData.email,
             password: userData.password
           } 
-        };
-        console.log("payload: ", payload);
-        const token = await createToken({payload});
-
-        console.log("token: ", token);
+        };        
+        const token = await createToken({payload});      
         res.json(token);
-
       } catch (err) {
         res.status(500).send('Server Error');
       }    
