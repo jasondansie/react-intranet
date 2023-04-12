@@ -5,8 +5,6 @@ const cors = require('cors');
 const config = require('./config');
 
 
-require('dotenv').config(); 
-
 const { Sequelize } = require('sequelize');
 const authMiddleware = require('./authMiddleware');
 const createToken = require('./tokenMiddleWare');
