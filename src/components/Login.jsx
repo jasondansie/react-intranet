@@ -8,9 +8,7 @@ import { isLoading } from './features/UserSlice.js';
 
 const Login = () => {
     const dispatch = useDispatch();
-
     const loading = useSelector((state) => state.user.isLoading);
-    const Authenticated = useSelector((state) => state.user.isAuthenticated);
 
     const [email, setEmail] = useState("");
     const [pwd, setPwd] = useState("");
