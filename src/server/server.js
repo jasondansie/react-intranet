@@ -44,6 +44,39 @@ const getFinances = async () =>{
   return result;
 }
 
+app.post('/users', (req, res) => {
+  // Get the user data from the request body
+  const { firstname, lastName, email, password, photoFilename, createdBy, accessId, enabled, position, company, resetPassword, resetPasswordTime } = req.body;
+
+  // Create a new instance of the User model with the user data
+  const newUser = User.build({
+      firstname,
+      lastName,
+      email,
+      password,
+      photoFilename,
+      createdBy,
+      accessId,
+      enabled,
+      position,
+      company,
+      resetPassword,
+      resetPasswordTime
+  });
+
+  // Save the new user to the database
+  newUser.save()
+      .then(savedUser => {
+          // Return a success response with the saved user data
+          res.status(201).json(savedUser);
+      })
+      .catch(error => {
+          // Return an error response if there was a problem saving the user
+          console.error('Error saving user:', error);
+          res.status(500).json({ error: 'Error saving user' });
+      });
+});
+
 
   app.get('/getUserById', authMiddleware, function (req, res) {
     User.findByPk(req.user.userid)
