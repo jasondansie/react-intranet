@@ -10,7 +10,9 @@
     display: flex;
     flex-direction: column;
     min-height: 20vh;
+    max-height: 80vh;
     min-width: 15vw;
+    max-width: 35vw;
     box-shadow: 0 0 10px -8px black;
     border-radius: 15px;
     background-color: white;
@@ -37,7 +39,7 @@ img {
 .login .loginMain {
     display: flex;
     justify-content: center;
-    margin-top: 3rem;
+    
     height: 20rem;
 }
 

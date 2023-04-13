@@ -26,24 +26,6 @@ export const userSlice = createSlice({
     },
 })
 
-// export const fetchSingleUser = (endpoint) => {
-   
-//     return async (dispatch) => {
-//         const user = await dbService.getSingleUser(endpoint);
-//         console.log("user: ", user);
-//         if(user.length === 0){
-//             dispatch(isLoading(false));
-//             alert('user info incorrect'); 
-//         }else{
-//             dispatch(loadUserData(user));
-//             dispatch(isLoading(false));
-          
-//             //window.location.href = "/"
-//         }
-      
-//     }
-// }
-
 export const { loadUserData, isLoading, isAuthenticated, addToken } = userSlice.actions;
 export const userInfo = (state) => state.user.userData;
 export default userSlice.reducer;
