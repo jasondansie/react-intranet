@@ -8,7 +8,6 @@ export const login = (userData) => async (dispatch) => {
     const res = await axios.post('http://localhost:5000/authorizeUser ', userData);
     
     const token = res.data;
-    console.log("token", token);
     localStorage.setItem('token', token);
     dispatch(addToken(token)); 
     dispatch(isAuthenticated(true));
