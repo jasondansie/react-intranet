@@ -1,0 +1,18 @@
+.top {
+
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+
+}
+
+.maincontent {
+    margin-top: 25px;
+    width: 90%;
+
+}
+
+.chart {
+    background-color: white;
+}

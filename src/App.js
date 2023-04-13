@@ -6,6 +6,8 @@ import Info from './components/Info';
 import Logout from './components/Logout';
 import MyProfile from './components/MyProfile';
 import Layout from './pages/Layout';
+import AddUser from './components/AddUser';
+import Finances from './components/Finances';
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
           <Route path='/home' element={<Home />}> </Route>
           <Route path='/myprofile' element={<MyProfile />}> </Route>
           <Route path='/info' element={<Info />}></Route>
+          <Route path='/adduser' element={<AddUser />}></Route>
+          <Route path='/finances' element={<Finances />}></Route>
           <Route path='/logout' element={<Logout />}></Route>
         </Route>  
       </Routes>
