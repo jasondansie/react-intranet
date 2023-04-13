@@ -80,19 +80,22 @@ app.get('/users', function (req, res) {
 });
 
 
-app.post('/autorizeUser', async function (req, res) {
+app.post('/authorizeUser', async function (req, res) {
     const {email, pwd} = req.body;
-
+    console.log("req", req.body);
     try {   
       const userData = await User.findOne({  attributes: ['id', 'firstname', 'password', 'email'],
       where: { email: email } })
-        .then(userData => {      
+        .then(userData => { 
+          console.log("userData", userData.firstname); 
           return userData;
         })
         .catch(err => {
           res.status(404).json({ error: 'Info not found' });
       })  
+      console.log("password", userData.password); 
         if (!userData || pwd !== userData.password) {
+          console.log("wrong password", userData.password);
           return res.status(401).json({ error: 'Invalid email or password' });
         }
         
@@ -103,11 +106,19 @@ app.post('/autorizeUser', async function (req, res) {
             email: userData.email,
             password: userData.password
           } 
-        };        
-        const token = await createToken({payload});      
-        res.json(token);
+        }; 
+        
+        console.log("payload", payload); 
+        
+        try {
+          const token = await createToken({payload}); 
+          console.log("payload", payload);     
+          res.json(token);
+        } catch (error) {
+          
+        }
       } catch (err) {
-        res.status(500).send('Server Error');
+        res.status(500).send('error creating token');
       }    
 });
 

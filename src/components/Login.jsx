@@ -26,7 +26,7 @@ const Login = () => {
         e.preventDefault();
 
         dispatch(isLoading(true));
-        await dispatch(login({ email, pwd }));
+        dispatch(login({ email, pwd }));
         dispatch(isLoading(false));
     }
 
