@@ -8,6 +8,7 @@ import MyProfile from './components/MyProfile';
 import Layout from './pages/Layout';
 import AddUser from './components/AddUser';
 import Finances from './components/Finances';
+import UploadExcel from './components/UploadExcel';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path='/info' element={<Info />}></Route>
           <Route path='/adduser' element={<AddUser />}></Route>
           <Route path='/finances' element={<Finances />}></Route>
+          <Route path='/uploadexcel' element={<UploadExcel />}></Route>
           <Route path='/logout' element={<Logout />}></Route>
         </Route>  
       </Routes>

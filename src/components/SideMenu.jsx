@@ -19,8 +19,6 @@ const SideMenu = ({ image, name, accessid }) => {
             break;
     }
 
-    console.log("role", role);
-
     return (
         <div>
             <div className={classes.user}>
@@ -31,9 +29,9 @@ const SideMenu = ({ image, name, accessid }) => {
                 <h2>{role}</h2>
             </div>
             <div className={classes.menulist}>
-                
-                    {
-                        role === "admin" ? 
+
+                {
+                    role === "admin" ?
                         <ul>
                             <li>
                                 <MenuItem
@@ -50,42 +48,49 @@ const SideMenu = ({ image, name, accessid }) => {
                                 />
                             </li>
                         </ul>
-                    :
-                    role === "manager" ? 
-                        <ul>
-                            <li>
-                                <MenuItem
-                                    name="DashBoard"
-                                    icon="fa fa-clock-o"
-                                    link="/home"
-                                />
-                            </li>
-                            <li>
-                                <MenuItem
-                                    name="Finances"
-                                    icon="fa fa-clock-o"
-                                    link="/finances"
-                                />
-                            </li>
-                        </ul>
-                    :
-                        <ul>
-                            <li>
-                                <MenuItem
-                                    name="DashBoard"
-                                    icon="fa fa-clock-o"
-                                    link="/home"
-                                />
-                            </li>
-                            <li>
-                                <MenuItem
-                                    name="personal stats"
-                                    icon="fa fa-clock-o"
-                                    link="/home"
-                                />
-                            </li>
-                        </ul>      
-                    } 
+                        :
+                        role === "manager" ?
+                            <ul>
+                                <li>
+                                    <MenuItem
+                                        name="DashBoard"
+                                        icon="fa fa-clock-o"
+                                        link="/home"
+                                    />
+                                </li>
+                                <li>
+                                    <MenuItem
+                                        name="Finances"
+                                        icon="fa fa-clock-o"
+                                        link="/finances"
+                                    />
+                                </li>
+                                <li>
+                                    <MenuItem
+                                        name="Upload file"
+                                        icon="fa fa-clock-o"
+                                        link="/uploadexcel"
+                                    />
+                                </li>
+                            </ul>
+                            :
+                            <ul>
+                                <li>
+                                    <MenuItem
+                                        name="DashBoard"
+                                        icon="fa fa-clock-o"
+                                        link="/home"
+                                    />
+                                </li>
+                                <li>
+                                    <MenuItem
+                                        name="personal stats"
+                                        icon="fa fa-clock-o"
+                                        link="/home"
+                                    />
+                                </li>
+                            </ul>
+                }
             </div>
         </div>
 
