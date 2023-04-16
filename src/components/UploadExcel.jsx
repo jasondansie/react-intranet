@@ -1,9 +1,11 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { utils, read } from 'xlsx';
 
 const UploadExcel = () => {
     const [file, setFile] = useState(null);
     const [jsonData, setJsonData] = useState(null);
+    const [callData, setCallData] = useState(null);
     const [columnNames, setColumnNames] = useState(null);
 
     const handleFileChange = (e) => {
@@ -18,7 +20,6 @@ const UploadExcel = () => {
             const workbook = read(data, { type: 'array' });
             const sheet = workbook.Sheets[workbook.SheetNames[0]];
             const json = utils.sheet_to_json(sheet, { header: 1 });
-            console.log(json);
             setJsonData(json);
             separateData(json);
         };
@@ -30,7 +31,24 @@ const UploadExcel = () => {
                 setColumnNames(element);
             }
         });
+        let newCallData = [];
+  
+        // Loop through the data array
+        data.forEach((call, index) => {
+          if (index > 7) {
+            // Add the all data after row 8 which is not needed
+            newCallData.push(call);
+          }
+        });
+
+        setCallData(newCallData);
+      
     };
+
+    const handleSave = () => {
+        const calls = {callData};
+        axios.post('http://localhost:5000/uploadxlsx ', calls )
+    }
 
     useEffect(() => {
         if (columnNames) {
@@ -46,6 +64,8 @@ const UploadExcel = () => {
                 <div>
                     <h3>columns found</h3>
                     {columnNames}
+
+                    <button onClick={handleSave}>Save to Database</button>
                     <p>Json file content:</p>
                     <ul>
                         {jsonData.map((item, index) => (

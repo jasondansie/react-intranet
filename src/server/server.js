@@ -16,6 +16,7 @@ const sequelize = new Sequelize(config.db.database, config.db.user, config.db.pa
 });
 
 const User = require('./models/User')(sequelize);
+const CallReport = require('./models/Report')(sequelize);
 
 app.use(cors());
 app.use(express.json());
@@ -153,6 +154,32 @@ app.post('/authorizeUser', async function (req, res) {
       } catch (err) {
         res.status(500).send('error creating token');
       }    
+});
+
+app.post("/uploadxlsx", async function (req, res) {
+    const {callData} = req.body;
+    // console.log("req", jsonData);
+
+    sequelize.query('TRUNCATE TABLE Reports;');
+
+    const columnNames = callData.shift();
+
+    for (const data of callData) {
+      const row = {};
+      for (let i = 0; i < columnNames.length; i++) {
+        const key = columnNames[i].replace(' ', ''); // remove spaces from column names
+        row[key] = data[i];
+      }
+      console.log('row', row);
+      try {
+        await CallReport.create(row);
+        console.log("row created.");
+      } catch (error) {
+        console.error('Error saving user:', error);
+        return  'Problem saving row' + error;
+      }
+    }
+    res.status(200).json({msg: 'data saved'});
 });
 
 // addUser("Jason", "Dansie", "jasondansie@gmail.com", 'Passwd123', "Jason.jpg");
