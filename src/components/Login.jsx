@@ -3,16 +3,16 @@ import classes from './Login.module.css'
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../actions/authActions';
-import { isLoading } from './features/UserSlice.js';
+import { isLoading } from './features/UserSlice';
 
 
 const Login = () => {
     const dispatch = useDispatch();
     const loading = useSelector((state) => state.user.isLoading);
+    const isLoggedIn = useSelector((state) => state.user.isAuthenticated);
 
     const [email, setEmail] = useState("");
     const [pwd, setPwd] = useState("");
-
 
     const ShowSpinner = () => {
         if (loading) {
@@ -26,8 +26,13 @@ const Login = () => {
         e.preventDefault();
 
         dispatch(isLoading(true));
+        await new Promise((resolve) => setTimeout(resolve, 100))
+
         dispatch(login({ email, pwd }));
-        dispatch(isLoading(false));
+        console.log("isLoggedIn", isLoggedIn);
+        if (isLoggedIn) {
+            dispatch(isLoading(false));
+        }
     }
 
     return (
@@ -40,7 +45,7 @@ const Login = () => {
                     </div>
                 </div>
                 <div className={classes.showSpinner}>
-                   {loading && <ShowSpinner />}
+                    {loading && <ShowSpinner />}
                 </div>
                 <div className={classes.loginMain}>
                     <form action="">

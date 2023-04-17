@@ -14,9 +14,9 @@ export const userSlice = createSlice({
         loadUserData: (state, action) => {
             state.userData = action.payload;
         },
-        isLoading(state, action){
-            state.isLoading = action.payload;
-        },
+        isLoading: (state, action) => {
+            return { ...state, isLoading: action.payload };
+          },
         isAuthenticated(state, action){
             state.isAuthenticated = action.payload;
         },
