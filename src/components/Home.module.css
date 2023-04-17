@@ -13,6 +13,11 @@
 
 }
 
+.userStats {
+    display: flex;
+    flex-direction: row;
+}
+
 .chart {
     background-color: white;
 }

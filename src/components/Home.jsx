@@ -4,15 +4,18 @@ import { Line } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
+import { loadUserData } from './features/UserSlice.js';
 import classes from './Home.module.css'
 import PageHeading from './PageHeading';
 import BasicTable from './BasicTable';
+import SingleStatBox from './SingleStatBox';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
 
 const Home = () => {
   const dispatch = useDispatch();
   const userToken = useSelector((state) => state.user.userToken);
+  const userData = useSelector((state) => state.user.userData);
 
   const [data, setData] = useState(null);
   const [users, setUsers] = useState(null);
@@ -65,7 +68,35 @@ const Home = () => {
       .catch(error => {
         console.error(error);
       });
+
+    axios.get('http://localhost:5000/getUserById', {
+      headers: {
+        Authorization: userToken
+      }
+    })
+      .then(response => {
+        dispatch(loadUserData(response.data));
+      })
+      .catch(error => {
+        console.error(error);
+      });
   }, [userToken, dispatch]);
+
+  let role = "";
+  if (userData && userData.accessId) {
+    switch (userData.accessId) {
+      case 1:
+        role = "admin"
+        break;
+      case 2:
+        role = "manager"
+        break;
+      default:
+        role = "user"
+        break;
+    }
+  }
+
 
   // const [chartData, setChartData] = useState({
   //     labels: Data.map((data) => data.year), 
@@ -94,19 +125,42 @@ const Home = () => {
       />
       <div className={classes.top}>
         <div className={classes.maincontent}>
-          {users && <BasicTable
-            title="Current Users"
-            users={users}
-          />}
-          <div className={classes.chart}>
-            {data && <Line data={data} />}
-          </div>
+          {
+            role === 'admin' ?
+              users && <BasicTable
+                title="Current Users"
+                users={users}
+              />
+              :
+              role === 'manager' ?
+                <div className={classes.chart}>
+                  {data && <Line data={data} />}
+                </div>
+                :
+                <div>
+                  <div className={classes.userStats}>
+                    < SingleStatBox
+                      icon={'fa fa-user yellow_color'}
+                      description={'Calls'}
+                      stats={'67'}
+                    />
+                    < SingleStatBox
+                      icon={'fa fa-user'}
+                      description={'projects'}
+                      stats={'5'}
+                    />
+                    < SingleStatBox
+                      icon={'fa fa-phone'}
+                      description={'call minutes'}
+                      stats={'543'}
+                    />
+                  </div>
+                </div>
+          }
         </div>
       </div>
     </div>
-
   );
-
 }
 
 export default Home;
