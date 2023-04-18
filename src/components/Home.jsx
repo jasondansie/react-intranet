@@ -4,11 +4,13 @@ import { Line } from "react-chartjs-2";
 import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler } from 'chart.js';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadUserData } from './features/UserSlice.js';
+import { loadUserData } from './features/UserSlice.js'
 import classes from './Home.module.css'
 import PageHeading from './PageHeading';
 import BasicTable from './BasicTable';
 import SingleStatBox from './SingleStatBox';
+
+
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
 
@@ -19,6 +21,9 @@ const Home = () => {
 
   const [data, setData] = useState(null);
   const [users, setUsers] = useState(null);
+  const [report, setReport] = useState(null);
+
+  
 
   useEffect(() => {
     axios.get('http://localhost:5000/finances', {
@@ -75,13 +80,22 @@ const Home = () => {
       }
     })
       .then(response => {
+        console.log("response: ", response.data);
         dispatch(loadUserData(response.data));
       })
       .catch(error => {
         console.error(error);
       });
-  }, [userToken, dispatch]);
 
+        axios.post(`http://localhost:5000/reports/${userData.firstname} `)
+        .then(res => {
+          setReport(res.data);
+        });
+      
+  }, [userToken, dispatch, userData]);
+
+  console.log("userData", userData);
+  console.log("report", report);
   let role = "";
   if (userData && userData.accessId) {
     switch (userData.accessId) {
@@ -96,6 +110,8 @@ const Home = () => {
         break;
     }
   }
+
+  
 
 
   // const [chartData, setChartData] = useState({

@@ -22,24 +22,6 @@ app.use(cors());
 app.use(express.json());
 
 
-// const addUser1 = (firstname, lastname, email, password, photofilename,  createdby = "1", accessid = "2", enabled = "1", position = "none", company = "Good Call", resetpassword = true) => (async () => {
-//   await sequelize.sync(); // sync the model with the database
-//   const user = await User.create({
-//     firstname:{firstname},
-//     lastname: {lastname},
-//     email: {email},
-//     password: {password},
-//     createdby: {createdby},
-//     accessid: {accessid},
-//     enabled: {enabled},
-//     photofilename:{photofilename},
-//     position: {position},
-//     company: {company},
-//     resetpassword: {resetpassword},
-    
-//   });
-// })();
-
 const getFinances = async () =>{
   let result = await db.getFinances();
   return result;
@@ -182,9 +164,22 @@ app.post("/uploadxlsx", async function (req, res) {
     res.status(200).json({msg: 'data saved'});
 });
 
-// addUser("Jason", "Dansie", "jasondansie@gmail.com", 'Passwd123', "Jason.jpg");
-// addUser("Stina", "Dansie", "stina@goodcall.fi", "Passwd123", "Stina.jpg");
-// addUser("Sakke", "Turunen", "Sakke@goodcall.fi", "Passwd123", "Sakke.jpg");
+app.get('/reports/:agentName', async (req, res) => {
+  const agentName = req.params.agentName;
+
+  try {
+    const reports = await CallReport.findAll({
+      where: {
+        Agentinnimi: agentName
+      }
+    });
+    res.status(200).json(reports);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 
 app.listen(5000, function () {
     console.log('Server is running on port 5000..');
