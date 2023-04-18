@@ -71,11 +71,11 @@ module.exports = function(sequelize) {
             type: DataTypes.STRING,
             allowNull: true
         },
-        Duration_min: {
+        Durationmin: {
             type: DataTypes.INTEGER,
             allowNull: true
         },
-        Talktime_min: {
+        Talktimemin: {
             type: DataTypes.INTEGER,
             allowNull: true
         },

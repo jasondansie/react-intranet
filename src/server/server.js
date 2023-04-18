@@ -98,12 +98,11 @@ app.get('/users', function (req, res) {
 
 app.post('/authorizeUser', async function (req, res) {
     const {email, pwd} = req.body;
-    console.log("req", req.body);
     try {   
       const userData = await User.findOne({  attributes: ['id', 'firstname', 'password', 'email'],
       where: { email: email } })
         .then(userData => { 
-          console.log("userData", userData.firstname); 
+          
           return userData;
         })
         .catch(err => {
@@ -122,13 +121,9 @@ app.post('/authorizeUser', async function (req, res) {
             email: userData.email,
             password: userData.password
           } 
-        }; 
-        
-        console.log("payload", payload); 
-        
+        };         
         try {
-          const token = await createToken({payload}); 
-          console.log("payload", payload);     
+          const token = await createToken({payload});             
           res.json(token);
         } catch (error) {
           

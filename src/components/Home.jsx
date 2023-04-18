@@ -24,78 +24,108 @@ const Home = () => {
   const [report, setReport] = useState(null);
 
   
-
   useEffect(() => {
-    axios.get('http://localhost:5000/finances', {
-      headers: {
-        Authorization: userToken
+    // axios.get('http://localhost:5000/finances', {
+    //   headers: {
+    //     Authorization: userToken
+    //   }
+    // })
+    //   .then(response => {
+    //     const month = response.data.map(item => item.month);
+    //     const profit = response.data.map(item => item.profit);
+    //     const revenue = response.data.map(item => item.revenue);
+  
+    //     const chartdata = {
+    //       labels: month,
+    //       datasets: [
+    //         {
+    //           label: "Revenue",
+    //           data: revenue,
+    //           fill: true,
+    //           backgroundColor: "rgba(75,192,192,0.2)",
+    //           borderColor: "rgba(75,192,192,1)"
+    //         },
+    //         {
+    //           label: "Profit",
+    //           data: profit,
+    //           fill: true,
+    //           backgroundColor: "rgba(108, 47, 214,0.6)",
+    //           borderColor: "#747427"
+    //         }
+    //       ]
+    //     };
+  
+    //     setData(chartdata);
+    //   })
+    //   .catch(error => {
+    //     console.error(error);
+    //   });
+
+    //   if(!users){
+    //     axios.get('http://localhost:5000/users', {
+    //   headers: {
+    //     Authorization: userToken
+    //   }
+    // })
+    //   .then(response => {
+    //     setUsers(response.data);
+    //   })
+    //   .catch(error => {
+    //     console.error(error);
+    //   });
+    //   }
+  
+    
+  
+    // axios.get('http://localhost:5000/getUserById', {
+    //   headers: {
+    //     Authorization: userToken
+    //   }
+    // })
+    //   .then(response => {
+    //     getReport(response.data)
+    //     dispatch(loadUserData(response.data));
+    //   })
+    //   .catch(error => {
+    //     console.error(error);
+    //   });
+
+      const fetchData = async () => {
+        try {
+          const [userResponse] = await Promise.all([
+            axios.get('http://localhost:5000/getUserById', {
+              headers: {
+                Authorization: userToken
+              }
+            })
+          ]);
+    
+          getReport(userResponse.data);
+    
+          dispatch(loadUserData(userResponse.data));
+    
+        } catch (error) {
+          console.error(error);
+        }
       }
-    })
-      .then(response => {
-        const month = response.data.map(item => item.month);
-        const profit = response.data.map(item => item.profit);
-        const revenue = response.data.map(item => item.revenue);
+    
+      fetchData();
+    
+  }, [dispatch, userToken]);
+  
 
-        const chartdata = {
-          labels: month,
-          datasets: [
-            {
-              label: "Revenue",
-              data: revenue,
-              fill: true,
-              backgroundColor: "rgba(75,192,192,0.2)",
-              borderColor: "rgba(75,192,192,1)"
-            },
-            {
-              label: "Profit",
-              data: profit,
-              fill: true,
-              backgroundColor: "rgba(108, 47, 214,0.6)",
-              borderColor: "#747427"
-            }
-          ]
-        };
-
-        setData(chartdata);
-      })
-      .catch(error => {
-        console.error(error);
+  const getReport = (userData) => {
+    const payload = `${userData.firstname} ${userData.lastName}`;
+    
+    axios.get(`http://localhost:5000/reports/${payload} `)
+      .then(res => {
+        setReport(res.data);
       });
+  }
 
-    axios.get('http://localhost:5000/users', {
-      headers: {
-        Authorization: userToken
-      }
-    })
-      .then(response => {
-        setUsers(response.data);
-      })
-      .catch(error => {
-        console.error(error);
-      });
-
-    axios.get('http://localhost:5000/getUserById', {
-      headers: {
-        Authorization: userToken
-      }
-    })
-      .then(response => {
-        console.log("response: ", response.data);
-        dispatch(loadUserData(response.data));
-      })
-      .catch(error => {
-        console.error(error);
-      });
-
-        axios.post(`http://localhost:5000/reports/${userData.firstname} `)
-        .then(res => {
-          setReport(res.data);
-        });
-      
-  }, [userToken, dispatch, userData]);
-
-  console.log("userData", userData);
   console.log("report", report);
+
+
   let role = "";
   if (userData && userData.accessId) {
     switch (userData.accessId) {
@@ -111,28 +141,7 @@ const Home = () => {
     }
   }
 
-  
 
-
-  // const [chartData, setChartData] = useState({
-  //     labels: Data.map((data) => data.year), 
-  //     datasets: [
-  //       {
-  //         label: "Users Gained ",
-  //         data: Data.map((data) => data.userGain),
-  //         backgroundColor: [
-  //           "rgba(75,192,192,0.2)",
-  //           "#ecf0f1",
-  //           "#50AF95",
-  //           "#f3ba2f",
-  //           "#2a71d0"
-  //         ],
-  //         fill: true,
-  //         borderColor: "black",
-  //         borderWidth: 2
-  //       }
-  //     ]
-  //   });
 
   return (
     <div>
@@ -158,7 +167,7 @@ const Home = () => {
                     < SingleStatBox
                       icon={'fa fa-user yellow_color'}
                       description={'Calls'}
-                      stats={'67'}
+                      stats={report.length}
                     />
                     < SingleStatBox
                       icon={'fa fa-user'}
