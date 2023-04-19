@@ -25,41 +25,41 @@ const Home = () => {
 
   
   useEffect(() => {
-    // axios.get('http://localhost:5000/finances', {
-    //   headers: {
-    //     Authorization: userToken
-    //   }
-    // })
-    //   .then(response => {
-    //     const month = response.data.map(item => item.month);
-    //     const profit = response.data.map(item => item.profit);
-    //     const revenue = response.data.map(item => item.revenue);
+    axios.get('http://localhost:5000/finances', {
+      headers: {
+        Authorization: userToken
+      }
+    })
+      .then(response => {
+        const month = response.data.map(item => item.month);
+        const profit = response.data.map(item => item.profit);
+        const revenue = response.data.map(item => item.revenue);
   
-    //     const chartdata = {
-    //       labels: month,
-    //       datasets: [
-    //         {
-    //           label: "Revenue",
-    //           data: revenue,
-    //           fill: true,
-    //           backgroundColor: "rgba(75,192,192,0.2)",
-    //           borderColor: "rgba(75,192,192,1)"
-    //         },
-    //         {
-    //           label: "Profit",
-    //           data: profit,
-    //           fill: true,
-    //           backgroundColor: "rgba(108, 47, 214,0.6)",
-    //           borderColor: "#747427"
-    //         }
-    //       ]
-    //     };
+        const chartdata = {
+          labels: month,
+          datasets: [
+            {
+              label: "Revenue",
+              data: revenue,
+              fill: true,
+              backgroundColor: "rgba(75,192,192,0.2)",
+              borderColor: "rgba(75,192,192,1)"
+            },
+            {
+              label: "Profit",
+              data: profit,
+              fill: true,
+              backgroundColor: "rgba(108, 47, 214,0.6)",
+              borderColor: "#747427"
+            }
+          ]
+        };
   
-    //     setData(chartdata);
-    //   })
-    //   .catch(error => {
-    //     console.error(error);
-    //   });
+        setData(chartdata);
+      })
+      .catch(error => {
+        console.error(error);
+      });
 
     //   if(!users){
     //     axios.get('http://localhost:5000/users', {
@@ -123,8 +123,28 @@ const Home = () => {
       });
   }
 
-  console.log("report", report);
+  if (report) {
+    console.log("report", report);
+  }
+  
+  let count = "";
+  
+if (report) {
+   count = report.reduce((acc, obj) => {
+    return acc + (obj.Soitonlopputulos === 'Meeting');
+  }, 0);
 
+} else {
+  
+}  
+  const numbers = [1, 2, 3, 4, 5];
+const sum = numbers.reduce((accumulator, currentValue) => {
+  return accumulator + currentValue;
+}, 0);
+console.log(sum); // Output: 15
+
+  
+  // console.log(count); // Output: 3
 
   let role = "";
   if (userData && userData.accessId) {
@@ -167,7 +187,7 @@ const Home = () => {
                     < SingleStatBox
                       icon={'fa fa-user yellow_color'}
                       description={'Calls'}
-                      stats={report.length}
+                      stats={count}
                     />
                     < SingleStatBox
                       icon={'fa fa-user'}

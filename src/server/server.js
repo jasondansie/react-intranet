@@ -9,10 +9,14 @@ const { Sequelize } = require('sequelize');
 const authMiddleware = require('./authMiddleware');
 const createToken = require('./tokenMiddleWare');
 
+console.log("host", config.db.host);
+console.log("database", config.db.database);
+console.log("user", config.db.user);
+
 
 const sequelize = new Sequelize(config.db.database, config.db.user, config.db.password, {
-  dialect: 'mysql',
-  host: config.db.host
+  host: 'localhost',
+  dialect: 'mysql'
 });
 
 const User = require('./models/User')(sequelize);
@@ -20,6 +24,17 @@ const CallReport = require('./models/Report')(sequelize);
 
 app.use(cors());
 app.use(express.json());
+
+app.get('/test', (req, res) => {
+  sequelize
+    .authenticate()
+    .then(() => {
+      res.send('Connection has been established successfully.');
+    })
+    .catch((err) => {
+      res.send('Unable to connect to the database:', err);
+    });
+});
 
 
 const getFinances = async () =>{
@@ -123,6 +138,7 @@ app.post('/authorizeUser', async function (req, res) {
           } 
         };         
         try {
+          console.log("payload", payload);
           const token = await createToken({payload});             
           res.json(token);
         } catch (error) {
@@ -145,6 +161,16 @@ app.post("/uploadxlsx", async function (req, res) {
       const row = {};
       for (let i = 0; i < columnNames.length; i++) {
         const key = columnNames[i].replace(' ', ''); // remove spaces from column names
+        row[key] = data[i];
+        if (i === 18) {
+          console.log("changing 18")
+          const key = columnNames[i].replace('Duration(min)', 'durationmin'); // remove spaces from column names
+          row[key] = data[i];
+        }
+      }
+      
+      for (let i = 0; i < columnNames.length; i++) {
+        const key = columnNames[i].replace('Talktime(min)', 'talktimemin'); // remove spaces from column names
         row[key] = data[i];
       }
       console.log('row', row);
