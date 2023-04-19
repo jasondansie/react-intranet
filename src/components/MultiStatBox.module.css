@@ -1,0 +1,48 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    width: 20vw;
+    height: 30vh;
+    background-color:rgb(232, 230, 230);
+    margin: 2rem;
+}
+
+.colorblock{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #3b5998;
+    height: 40%;
+}
+
+.infoblock{
+    display: flex;
+    flex-direction: row;
+    height: 60%;
+}
+
+.text1block{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 50%;
+}
+
+.text1block h3{
+    color: black;
+    margin: 1.5rem 1rem 1rem;
+}
+
+.text2block{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 50%;
+}
+
+.text2block h3{
+    color: black;
+    margin: 1.5rem 1rem 1rem;
+}

@@ -1,10 +1,13 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import classes from './AdminMenu.module.css'
+import { isAuthenticated, isLoading } from '../components/features/UserSlice';
+import { useDispatch } from 'react-redux';
 
 const AdminMenu = ({image, userName}) => {
     const navigation = useNavigate();
     let imageUrl = `./images/${image}`;
+    const dispatch = useDispatch();
 
     const changeHandler = (e) => {
             if(e.target.value === "myprofile"){
@@ -12,7 +15,9 @@ const AdminMenu = ({image, userName}) => {
             }else if(e.target.value === "Info"){
                 navigation("/info");
             }else{
-                navigation("/logout");
+                dispatch(isAuthenticated(false));
+                dispatch(isLoading(false));
+                navigation("/");
             }
     }
 

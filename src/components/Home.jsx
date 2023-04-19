@@ -9,6 +9,7 @@ import classes from './Home.module.css'
 import PageHeading from './PageHeading';
 import BasicTable from './BasicTable';
 import SingleStatBox from './SingleStatBox';
+import MultiStatBox from './MultiStatBox.jsx';
 
 
 
@@ -127,24 +128,23 @@ const Home = () => {
     console.log("report", report);
   }
   
-  let count = "";
+  let Meetings = "";
+  let callCount = 0;
+  
+  let minutesTalked =0;
   
 if (report) {
-   count = report.reduce((acc, obj) => {
+  callCount = report.length;
+  Meetings = report.reduce((acc, obj) => {
     return acc + (obj.Soitonlopputulos === 'Meeting');
   }, 0);
 
-} else {
-  
-}  
-  const numbers = [1, 2, 3, 4, 5];
-const sum = numbers.reduce((accumulator, currentValue) => {
-  return accumulator + currentValue;
-}, 0);
-console.log(sum); // Output: 15
+    report.forEach(call => {
+      minutesTalked = minutesTalked + Number(call.talktimemin);
+    });
 
+} 
   
-  // console.log(count); // Output: 3
 
   let role = "";
   if (userData && userData.accessId) {
@@ -178,26 +178,51 @@ console.log(sum); // Output: 15
               />
               :
               role === 'manager' ?
-                <div className={classes.chart}>
-                  {data && <Line data={data} />}
+                <div className={classes.maincontentRow}>
+                  
+                  <MultiStatBox 
+                    icon={'fa fa-user yellow_color'}
+                    text1={'Friends'}
+                    text2={'Posts'}
+                    num1={'10K'}
+                    num2={'35k'}
+                  />
+
+                  <MultiStatBox 
+                    icon={'fa fa-user yellow_color'}
+                    text1={'Projects'}
+                    text2={'talk time'}
+                    num1={'7'}
+                    num2={'22k'}
+                  />
+
+                  <MultiStatBox 
+                    icon={'fa fa-phone'}
+                    text1={'Teams'}
+                    text2={'Calls'}
+                    num1={'10'}
+                    num2={'9021'}
+                  />
                 </div>
+                
+                
                 :
                 <div>
                   <div className={classes.userStats}>
                     < SingleStatBox
                       icon={'fa fa-user yellow_color'}
                       description={'Calls'}
-                      stats={count}
+                      stats={callCount}
                     />
                     < SingleStatBox
                       icon={'fa fa-user'}
                       description={'projects'}
-                      stats={'5'}
+                      stats={5}
                     />
                     < SingleStatBox
                       icon={'fa fa-phone'}
                       description={'call minutes'}
-                      stats={'543'}
+                      stats={minutesTalked}
                     />
                   </div>
                 </div>

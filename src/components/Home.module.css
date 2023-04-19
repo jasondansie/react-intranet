@@ -13,6 +13,11 @@
 
 }
 
+.maincontentRow{
+    display: flex;
+    flex-direction: row;
+}
+
 .userStats {
     display: flex;
     flex-direction: row;
