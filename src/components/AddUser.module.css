@@ -12,3 +12,32 @@
     width: 90%;
 
 }
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group {
+    display: flex;
+    width: 50vh;
+    justify-content: space-evenly;
+    margin: 0 0 15px;
+}
+
+label {
+    display: inline-block;
+    width: 100px;
+    margin: 0.5rem;
+}
+
+select {
+    width: 20vh;
+}
+
+form button {
+    height: 5vh;
+    width: 15vw;
+    margin: 20px 100px 50px;
+    text-align: center;
+}

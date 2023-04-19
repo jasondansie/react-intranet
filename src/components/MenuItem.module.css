@@ -13,3 +13,10 @@
     display: inline-block;
     color: white;
  }
+
+ .menuItem button {
+    height: 5vh;
+    width: 10vw;
+    margin: 2px 20px 20px;
+    text-align: center;
+}

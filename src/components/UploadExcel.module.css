@@ -1,0 +1,11 @@
+.container button {
+    height: 5vh;
+    width: 15vw;
+    margin: 20px 100px 50px;
+    text-align: center;
+}
+
+.infoOutput{
+    display: flex;
+    flex-direction: column;
+}

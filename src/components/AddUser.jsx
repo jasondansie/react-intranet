@@ -79,41 +79,50 @@ const AddUser = () => {
         />
         <div className={classes.top}>
           <div className={classes.maincontent}>
-            {users && <BasicTable
-              title="Current Users"
-              users={users}
-            />}
-           
             <div>
-                <form onSubmit={handleSubmit}>
-                    <label htmlFor="firstname">First Name:</label>
+                <form className={classes.form} onSubmit={handleSubmit}>
+                  <div className='form-group'>
+                    <label className={classes.label} htmlFor="firstname">First Name:</label>
                     <input type="text" id="firstname" name="firstname" value={formData.firstname} onChange={handleInputChange} />
-
-                    <label htmlFor="lastName">Last Name:</label>
-                    <input type="text" id="lastName" name="lastName" value={formData.lastName} onChange={handleInputChange} />
-
-                    <label htmlFor="email">Email:</label>
-                    <input type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} />
-
-                    <label htmlFor="password">Password:</label>
-                    <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} />
-
-                    <label htmlFor="accessId">accessId:</label>
-                    <input type="text" id="accessId" name="accessId" value={formData.accessId} onChange={handleInputChange} />
-
+                  </div>
                     
-
-                    <label htmlFor="photoFilename">Photo Filename:</label>
+                  <div className='form-group'>
+                    <label className={classes.label} htmlFor="lastName">Last Name:</label>
+                    <input type="text" id="lastName" name="lastName" value={formData.lastName} onChange={handleInputChange} />
+                  </div>
+            
+                  <div className='form-group'>
+                    <label className={classes.label} htmlFor="email">Email:</label>
+                    <input type="email" id="email" name="email" value={formData.email} onChange={handleInputChange} />        
+                  </div>
+                  <div className='form-group'>
+                    <label className={classes.label} htmlFor="password">Password:</label>
+                    <input type="password" id="password" name="password" value={formData.password} onChange={handleInputChange} />
+                  </div>                
+                  <div className='form-group'>
+                    <label className={classes.label} htmlFor="accessId">accessId:</label>
+                    <input type="text" id="accessId" name="accessId" value={formData.accessId} onChange={handleInputChange} />
+                  </div>               
+                  <div className='form-group'>
+                    <label className={classes.label} htmlFor="photoFilename">Photo Filename:</label>
                     <input type="text" id="photoFilename" name="photoFilename" value={formData.photoFilename} onChange={handleInputChange} />
-
-                    <label htmlFor="position">Position:</label>
+                  </div>              
+                  <div className='form-group'>
+                    <label className={classes.label} htmlFor="position">Position:</label>
                     <input type="text" id="position" name="position" value={formData.position} onChange={handleInputChange} />
-
-                    <label htmlFor="company">Company:</label>
+                  </div>
+                  <div className='form-group'>
+                    <label className={classes.label} htmlFor="company">Company:</label>
                     <input type="text" id="company" name="company" value={formData.company} onChange={handleInputChange} />
-
-                    <button type="submit">Create User</button>
+                  </div>                
+                  <button type="submit">Create User</button>
                 </form>
+
+                {users && <BasicTable
+                  title="Current Users"
+                  users={users}
+                />}
+           
             </div>
           </div>
         </div>

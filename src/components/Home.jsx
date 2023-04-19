@@ -62,34 +62,34 @@ const Home = () => {
         console.error(error);
       });
 
-    //   if(!users){
-    //     axios.get('http://localhost:5000/users', {
-    //   headers: {
-    //     Authorization: userToken
-    //   }
-    // })
-    //   .then(response => {
-    //     setUsers(response.data);
-    //   })
-    //   .catch(error => {
-    //     console.error(error);
-    //   });
-    //   }
+      if(!users){
+        axios.get('http://localhost:5000/users', {
+      headers: {
+        Authorization: userToken
+      }
+    })
+      .then(response => {
+        setUsers(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+      }
   
     
   
-    // axios.get('http://localhost:5000/getUserById', {
-    //   headers: {
-    //     Authorization: userToken
-    //   }
-    // })
-    //   .then(response => {
-    //     getReport(response.data)
-    //     dispatch(loadUserData(response.data));
-    //   })
-    //   .catch(error => {
-    //     console.error(error);
-    //   });
+    axios.get('http://localhost:5000/getUserById', {
+      headers: {
+        Authorization: userToken
+      }
+    })
+      .then(response => {
+        getReport(response.data)
+        dispatch(loadUserData(response.data));
+      })
+      .catch(error => {
+        console.error(error);
+      });
 
       const fetchData = async () => {
         try {
@@ -142,7 +142,6 @@ if (report) {
     report.forEach(call => {
       minutesTalked = minutesTalked + Number(call.talktimemin);
     });
-
 } 
   
 

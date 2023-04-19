@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { utils, read } from 'xlsx';
+import classes from './UploadExcel.module.css'
 
 const UploadExcel = () => {
     const [file, setFile] = useState(null);
@@ -57,12 +58,19 @@ const UploadExcel = () => {
     }, [columnNames]);
 
     return (
-        <div>
-            <input type="file" onChange={handleFileChange} />
-            <button onClick={handleConvert}>Convert to JSON</button>
-            {jsonData && (
+        <div className={classes.container}>
+            <div>
                 <div>
-                    <h3>columns found</h3>
+                    <input type="file" onChange={handleFileChange} />
+                </div>
+                <div>
+                    <button onClick={handleConvert}>Convert to JSON</button>
+                </div>
+            </div>
+            
+            {jsonData && (
+                <div className={classes.infoOutput}>
+                    <h2>columns found</h2>
                     {columnNames}
 
                     <button onClick={handleSave}>Save to Database</button>
